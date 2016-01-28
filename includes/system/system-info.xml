@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<system>
+	<cms>
+		<name><![CDATA[Surftime]]></name>
+		<version>3.0.3</version>
+		<author>Alexander Weigelt</author>
+		<creation_date>2015-11-21</creation_date>
+	</cms>
+	<info>
+		<support>webdesign@alexander-weigelt.de</support>
+		<newsfeed></newsfeed>
+	</info>
+	<license>
+		<agreement>CC BY-NC-ND 4.0</agreement>
+		<legalcode>http://creativecommons.org/licenses/by-nc-nd/4.0/legalcode</legalcode>
+		<terms>
+			<![CDATA[
+Diese Software steht unter der Creativ Commons Lizenz:
+Namensnennung - Nicht kommerziell - Keine Bearbeitungen 4.0 International
+
+Sie dürfen:
+
+Teilen — das Material in jedwedem Format oder Medium vervielfältigen und weiterverbreiten
+
+Der Lizenzgeber kann diese Freiheiten nicht widerrufen solange Sie sich an die Lizenzbedingungen halten.
+
+Unter folgenden Bedingungen:
+
+Namensnennung — Sie müssen angemessene Urheber- und Rechteangaben machen, einen Link zur Lizenz beifügen und angeben, ob Änderungen vorgenommen wurden. Diese Angaben dürfen in jeder angemessenen Art und Weise gemacht werden, allerdings nicht so, dass der Eindruck entsteht, der Lizenzgeber unterstütze gerade Sie oder Ihre Nutzung besonders.
+
+Nicht kommerziell — Sie dürfen das Material nicht für kommerzielle Zwecke nutzen.
+
+Keine Bearbeitungen — Wenn Sie das Material remixen, verändern oder darauf anderweitig direkt aufbauen dürfen Sie die bearbeitete Fassung der Materials nicht verbreiten. 
+
+Beispielinhalte:
+
+Es sind bereits Inhalte als Text, Bild oder Formular in Surftime CMS enthalten. Diese können bearbeitet, erweitert oder gelöscht werden. Es besteht weiterhin ein Impressum. Dieses hat lediglich bespielhaften Charakter. Es entbindet nicht von der Pflicht, sich über aktuell korrekte Angaben zu informieren, und diese auf der Website zu veröffentlichen.
+
+Support:
+Der angebote Support ist eine freiwillige Leistung. Er dient zur Verbesserung und Weiterentwicklung der Software. Es besteht zu keinem Zeitpunkt ein Anspruch darauf.
+			]]>			
+		</terms>
+	</license>
+	<meta>
+		<title>Admin - Surftime CMS</title>
+	</meta>
+</system>

@@ -1,0 +1,161 @@
+@charset "UTF-8";
+/* CSS Document */
+
+body {
+	background-color: #202322;
+	word-wrap: break-word;
+}
+
+table {
+	width: 100%;
+}
+
+footer {
+	width: 100%;
+	color: #FFF;
+	text-align:center;
+}
+
+#wrapper {
+	background-color: #FFF;
+	min-height: 800px;
+}
+
+.showtabs {
+	padding: 0 2%;
+	overflow: hidden;
+}
+
+.extramargin {
+	margin-top: 1.25rem;
+}
+
+.removemargin {
+	margin: 0;
+}
+
+.removepadding {
+	padding: 0;
+}
+
+.dashbox{
+	min-height: 250px;	
+}
+
+input:required:focus {
+  border: 1px solid red;
+  outline: none;
+}
+
+.delete {
+	color: #D83014;
+}
+
+.formUpload, .formTheme {
+	border: .2em dashed #999;
+	background: #F9F9F9;
+	padding: 3em 0;
+}
+
+.formTheme {
+	padding-left: 1.25em;
+	padding-right: 1.25em;
+}
+
+.inputSlogan, .enableSetup {
+	padding: 2em;
+	background: #F9F9F9;
+}
+
+.enableSetup {
+	padding-bottom: 0;
+	margin-bottom: 2em;
+}
+
+.inputVariables {
+	margin-top: 2em;
+}
+
+.fileUpload, .formUpload {
+	position: relative;
+	overflow: hidden;
+}
+
+.fileUpload input.upload {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 0;
+	padding: 0;
+	font-size: 20px;
+	cursor: pointer;
+	opacity: 0;
+	filter: alpha(opacity=0);
+}
+
+.highlightButton {
+    font-weight: 600;
+    text-decoration: underline;
+    color: #0078A0;
+}
+
+.highlightChapter {
+    font-weight: 600;
+    font-style: italic;
+}
+
+figcaption {
+    font-size: .7em;
+    font-weight: 200;
+}
+
+.indent {
+    padding-left: 1.5rem;
+}
+
+.authorship {
+	height: 6rem;
+}
+
+.large {
+	font-size: 2em;
+}
+
+.larger {
+	font-size: 3em;
+}
+
+.slider-content, .slider-content li > div {
+	height: 250px !important;
+}
+
+.slider-content li > div {
+	color: #FFF;
+    background: #2BA6CB;
+    padding: 30px 40px;
+	text-align: center;
+}
+
+.slider-content li > div p, .slider-content li > div h3 {
+    color: #FFF;
+}
+
+@media only screen and (max-width: 768px){
+	.table-scrollable {
+		width: 100%;
+		overflow-y: auto;
+		margin: 0 0 1em;
+	}
+
+	.table-scrollable::-webkit-scrollbar {
+		-webkit-appearance: none;
+		width: 14px;
+		height: 14px;
+	}
+
+	.table-scrollable::-webkit-scrollbar-thumb {
+		border-radius: 8px;
+		border: 3px solid #fff;
+		background-color: rgba(0, 0, 0, .3);
+	}
+}

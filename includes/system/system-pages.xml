@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<database>
+	<site>
+		<insert>
+			<page>index</page>
+			<created>[[%DATE%]]</created>
+			<headline><![CDATA[ Willkommen! ]]></headline>
+			<content>
+				<![CDATA[ 
+				<h2>Geringer Aufwand hei&szlig;t mehr Freizeit!</h2><p><img class="alignleft" src="public/uploads/Big/beach.jpg" alt="beach" width="533" height="400" /> Du bist in Gedanken schon am Strand und steckst die F&uuml;&szlig;e in den Sand? Trotzdem willst du noch deine Inhalte ins Web bringen. Dann ist hier die einfache und schnelle L&ouml;sung f&uuml;r dein Problem.</p><p>Die Erstellung einer eigenen Homepage ist heutzutage kein Hexenwerk mehr. Kenntnisse in HTML, CSS oder etwa Programmiersprachen wie PHP sind dank ausgereifter Software nicht notwendig. Im wesentlichen unterscheiden sich die Content Management Systeme jedoch. Diese Software wird meist f&uuml;r spezielle Inhalte angeboten. So hat man nicht selten Anwendungen die f&uuml;r eine einfache Homepage nicht notwendig sind. Daf&uuml;r gibt es nun Surftime CMS.</p><p>Dieses CMS kommt ohne jeglichen Ballast aus und kann auch vom unerfahrenen Anwender bedient werden. Kurzum kann man nach Belieben neue Seiten im Handumdrehen erstellen, editieren oder wieder l&ouml;schen. Auch das Hochladen von Bildern ist mit wenigen Schritten erledigt. Fertig ist dein eigenes Projekt.</p><h3>Die wichtigsten Funktionen schon dabei?</h3><p>Das kann man klar mit ja beantworten. Surftime CMS hat standardm&auml;&szlig;ig ein kleines Kontaktformular dabei. So k&ouml;nnen deine Besucher unkompliziert Kontakt mit dir aufnehmen. Aber auch eine Volltextsuche wurde integriert. Eine gezielte Ausgabe von Ergebnissen bei der Suche nach einem gezielten Stichwort hilft deinen Besuchern gew&uuml;nschte Inhalte schneller zu finden.</p><p>Du willst mit mehreren Autoren an deiner Website arbeiten. Kein Problem! Surftime CMS ist ausgelegt f&uuml;r multiple User.</p><h3>Erweitern ist kein Problem!</h3><p>Du willst deiner Seite ein eigenes und individuelles Aussehen verleihen. Ich erstelle dir gerne ein Template um dich von allen anderen abzuheben. Beim Wunsch nach einer speziellen Funktion steht auch nichts im Wege. Auf Anfrage programmiere ich dir ein Plugin wie z.B. einen Livechat.</p><p>Das Worl-Wide-Web liegt dir nun zu F&uuml;&szlig;en. Vielen Dank das du dich f&uuml;r Surftime CMS entschieden hast und viel Erfolg mit deiner Website!</p><h3>Los geht es!</h3><p>Logge dich im Administratorbereich ein und f&uuml;lle die Website mit deinen Inhalten. <a title="Login Administrator" href="admin.php">Login</a></p>
+				]]>
+			</content>
+		</insert>
+		<insert>
+			<page>contact</page>
+			<created>[[%DATE%]]</created>
+			<headline><![CDATA[ Sende eine Nachricht! ]]></headline>
+			<content>
+				<![CDATA[ 
+				<h2>Du m&ouml;chtest etwas mitteilen?</h2><div class="grid-3">{%CONTACTFORM_MESSAGE%} {%CONTACTFORM%}</div><div class="row"><div class="grid-3"><p>Tolle Nachrichten bekommt jeder gerne. Also wenn du etwas sagen m&ouml;chtest, dann nutze doch einfach das Kontaktformular. Jetzt ausf&uuml;llen und abschicken. Dann bekommst du innerhalb kurzer Zeit eine Antwort.</p></div></div>
+				]]>
+			</content>
+		</insert>
+		<insert>
+			<page>imprint</page>
+			<created>[[%DATE%]]</created>
+			<headline><![CDATA[ Impressum ]]></headline>
+			<content>
+				<![CDATA[ 
+				<h2>Angaben gem&auml;&szlig; &sect; 5 TMG:</h2><ul><li>{%FIRSTNAME%} {%LASTNAME%}</li><li>{%STREET%}</li><li>{%POSTALZIP%} {%CITY%}</li></ul><h3>Kontakt:</h3><ul><li>Telefon: {%PHONE%}</li><li>E-Mail: {%EMAIL%}</li></ul> 
+				]]>
+			</content>
+		</insert>
+		<insert>
+			<page>search</page>
+			<created>[[%DATE%]]</created>
+			<headline><![CDATA[ Suchergebnisse ]]></headline>
+			<content>
+				<![CDATA[
+				<h2>Komme schneller an den gew&uuml;nscten Inhalt</h2><p>Suchen ist das bessere Finden! Lasse dir relevante Inhalte zu deinem Suchbegriff anzeigen.</p>{%SEARCHFORM%}
+				]]>
+			</content>
+		</insert>
+		<insert>
+			<page>error</page>
+			<created>[[%DATE%]]</created>
+			<headline><![CDATA[ Fehler 404 ]]></headline>
+			<content>
+				<![CDATA[ 
+				<h2>Es ist ein Fehler aufgetreten</h2><p>Entschuldige bitte, aber die gew&uuml;nschte Seite ist nicht zu finden! Es kommt immer einmal vor das Inhalte aktualisiert oder &uuml;berarbeitet werden. Dazu geh&ouml;rt nat&uuml;rlich auch alte und &uuml;berholte Inhalte zu entfernen. Aber vielleicht findest Du ja mit unserer Suche den gew&uuml;nschten Inhalt. Einfach deinen Begriff in das Suchfeld eingeben und "suchen" klicken. Andernfalls richte deine Frage direkt &uuml;ber das Kontaktformular an uns. Wir helfen dir gern weiter.</p>{%SEARCHFORM%}
+				]]>
+			</content>
+		</insert>
+	</site>
+	<meta>
+		<insert>
+			<page_id>1</page_id>
+			<indexation>index</indexation>
+			<title>Deine neue Startseite</title>
+			<keywords>CMS, Simple, Surftime, Content Management System</keywords>
+			<description>
+				<![CDATA[ 
+				Welcome to Surftime CMS! Erstelle, editiere oder l&ouml;sche super einfach den Inhalt deiner Website.
+				]]>
+			</description>
+		</insert>
+		<insert>
+			<page_id>2</page_id>
+			<indexation>index</indexation>
+			<title>Kontakt</title>
+			<keywords></keywords>
+			<description></description>
+		</insert>
+		<insert>
+			<page_id>3</page_id>
+			<indexation>noindex</indexation>
+			<title>Impressum</title>
+			<keywords></keywords>
+			<description></description>
+		</insert>
+		<insert>
+			<page_id>4</page_id>
+			<indexation>noindex</indexation>
+			<title>Suche</title>
+			<keywords></keywords>
+			<description></description>
+		</insert>
+		<insert>
+			<page_id>5</page_id>
+			<indexation>noindex</indexation>
+			<title>Fehler</title>
+			<keywords></keywords>
+			<description></description>
+		</insert>
+	</meta>
+	<navigation>
+		<insert>
+			<site_id>1</site_id>
+			<sorting>1</sorting>
+			<parent>0</parent>
+			<anchor>Startseite</anchor>
+		</insert>
+		<insert>
+			<site_id>2</site_id>
+			<sorting>2</sorting>
+			<parent>0</parent>
+			<anchor>Kontakt</anchor>
+		</insert>
+	</navigation>
+	<settings>
+		<insert>
+			<var_id>1</var_id>
+			<slogan>Surftime CMS</slogan>
+			<firstname>Vorname</firstname>
+			<lastname>Nachname</lastname>
+			<street>Strasse 12</street>
+			<postalzip>01234</postalzip>
+			<city>Ort</city>
+			<phone>0123 456789</phone>
+			<email>noreply@[[%HTTP-HOST%]]</email>
+			<company>Musterfirma</company>
+			<opening>Mo - Fr 10:00 bis 18:00 Uhr</opening>
+			<variable>Soeben bin ich stolz mit meiner neuen Internetseite gestartet. Ich freue mich auf jede Menge Besucher. Es erwarten euch stets aktuelle Inhalte und Neuigkeiten</variable>
+		</insert>
+	</settings>
+	<panel>
+		<insert>
+			<number>panel1</number>
+			<last_modified>[[%DATE%]]</last_modified>
+			<widget><![CDATA[ <div>Inhalt für Panel 1 ...</div> ]]></widget>
+		</insert>
+		<insert>
+			<number>panel2</number>
+			<last_modified>[[%DATE%]]</last_modified>
+			<widget><![CDATA[ <div>Inhalt für Panel 2 ...</div> ]]></widget>
+		</insert>
+		<insert>
+			<number>panel3</number>
+			<last_modified>[[%DATE%]]</last_modified>
+			<widget><![CDATA[ <div>Inhalt für Panel 3 ...</div> ]]></widget>
+		</insert>
+	</panel>
+	<user>
+		<insert>
+			<email>noreply@[[%HTTP-HOST%]]</email>
+			<username>[[%USERNAME%]]</username>
+			<password>[[%PASSWORD%]]</password>
+			<registration_date>[[%TIMESTAMP%]]</registration_date>
+			<status>admin</status>
+		</insert>
+	</user>
+	<setup>
+		<insert>
+			<set_id>1</set_id>
+			<template>Default</template>
+			<logout>0</logout>
+			<maintenance>0</maintenance>
+			<compress>0</compress>
+			<maxwidth>533</maxwidth>
+			<maxheight>400</maxheight>
+		</insert>
+	</setup>
+</database>

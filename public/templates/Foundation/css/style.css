@@ -1,0 +1,74 @@
+@charset "UTF-8";
+/* CSS Document */
+
+/* Alignment */
+
+.alignleft {
+	display: inline;
+	float: left;
+	margin-right: 1em;
+}
+
+.alignright {
+	display: inline;
+	float: right;
+	margin-left: 1em;
+}
+
+.aligncenter {
+	clear: both;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/* Extras */
+
+.margin-top-bottom {
+	margin-top: 1.25rem;
+	margin-bottom: 1.25rem;
+}
+
+/* Icon */
+
+.icon-middle {
+	font-size: 1.2em;
+}
+
+.icon-large {
+	font-size: 2.4em;
+}
+
+/* Button */
+
+input[type="submit"] {
+	padding-left: 0px;
+    padding-right: 0px;
+    width: 100%;
+	-moz-appearance: none;
+	border-radius: 0px;
+	border-style: solid;
+	border-width: 0px;
+	cursor: pointer;
+	margin: 0px 0px 1.25rem;
+	position: relative;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	padding: 1rem 2rem 1.0625rem;
+	font-size: 1.25rem;
+	background-color: #008CBA;
+	border-color: #007095;
+	color: #FFF;
+	transition: background-color 300ms ease-out 0s;
+}
+
+/* Media Query */
+
+@media only screen and (max-width:1024px) {
+	.fade-out-small {
+		display: none;
+	}
+}
+
+/* ------ Your Style here! ------ */

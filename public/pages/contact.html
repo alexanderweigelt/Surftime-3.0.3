@@ -1,0 +1,17 @@
+
+<!-- Add Contactform -->
+<form action="%s" method="post" class="contactform">   
+    <fieldset id="formkontakt">
+        <legend>Nachricht</legend>
+			<label for="name" >Name (Pflicht)</label>
+				<input type="text" name="name" id="name" value="" required />
+			<label for="adress" >E-Mail (Pflicht)</label>
+				<input type="email" name="adress" id="adress" value="" required />
+			<label for="subject" >Betreff (Pflicht)</label>
+				<input type="text" name="subject" id="subject" value="" required />
+			<label for="content">Anfrage</label>
+				<textarea name="content" id="content" rows="3" cols=""></textarea>
+				<input type="hidden" name="action" value="form">
+        	<input id="absenden" type="submit" value="absenden" />
+     </fieldset>
+</form>

@@ -1,0 +1,9 @@
+body#tinymce {
+    max-width: 100%;
+    overflow: auto;
+}
+
+#tinymce img {
+    max-width: 100% !important;
+    height: auto !important;
+}

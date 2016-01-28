@@ -1,0 +1,13 @@
+Hallo %FIRSTNAME% %LASTNAME%,
+
+es wurde eine neue Nachricht über das Anfrageformular von %MAINPAGE% an dich gesendet.
+
+---------------------------------
+
+Absender: %NAME%
+
+Message: %CONTENT%
+
+E-Mail: %ADRESS%
+
+---------------------------------

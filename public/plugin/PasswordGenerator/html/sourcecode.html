@@ -1,0 +1,45 @@
+	<script>
+	$(document).ready(function(e) {
+			
+		$('form#PasswordGenerator').submit(function(event) {
+			$('input#password').val('');
+			
+			var length = $("#length").val();
+			var uppercase = $("#uppercase:checked").val();
+			var numbers = $("#numbers:checked").val();
+			var special = $("#special:checked").val();
+			var specialchars = $("#specialchars").val();
+			/*console.log('length=' + length + ' uppercase=' + uppercase + ' numbers=' + numbers + ' special=' + special);*/
+			$.get("ajax.php",{ 
+				load: 'ajax', 
+				data: 'plugin', 
+				extension: 'PasswordGenerator', 
+				length: length, 
+				uppercase: uppercase, 
+				numbers: numbers, 
+				special: special, 
+				specialchars: specialchars 
+			}, function (password) {
+				
+				$('input#password').val(password);
+				/*console.log(password);*/
+			});
+			
+			event.preventDefault();
+		});
+	});
+	</script>
+
+    <p>Mache deine Vorgaben für ein Passwort:</p>
+    <form action="%s" method="post" id="PasswordGenerator" autocomplete="off">
+       	<label for="length">Länge</label>     
+		<input type="number" name="length" value="%d" id="length">
+  		<input type="checkbox" name="uppercase" id="uppercase" checked> Verwendung von Großbuchstaben<br>
+		<input type="checkbox" name="numbers" id="numbers" checked> Verwendung von Zahlen<br>
+		<input type="checkbox" name="special" id="special" checked> Verwendung von Sonderzeichen<br>
+		<label for="specialchars">deine Sonderzeichen</label>
+		<input type="text" name="specialchars" value="%s" id="specialchars">
+       	<input type="submit" name="action" value="Passwort erzeugen" title=" Ein neues Passwort generieren " class="button">
+	</form>
+	<label for="password">Dein neues Passwort:</label>
+	<input type="text" id="password" readonly autocomplete="off">

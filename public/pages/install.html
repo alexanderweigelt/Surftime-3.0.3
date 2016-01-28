@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Install - Surftime CMS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            border: none;
+        }
+        a {
+            text-decoration: none;
+            text-align: center;
+        }
+        h1 {
+            color: #33C;
+            font-size: 4em;
+            text-align: center;
+        }
+        p {
+            color: #333;
+            margin: 2em 0;
+        }
+        .container {
+            width: 100%;
+            max-width: 620px;
+            margin: 5em auto;
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            text-align: center;
+        }
+        textarea {
+            border: 1px solid #333;
+            margin: 2em;
+            padding: .5em;
+        }
+        .hint, form, .button {
+            width: 100%;
+            margin: 2em auto;
+        }
+        .hint{
+            font-style: italic;
+        }
+        .hint, form, .button {
+            max-width: 320px;
+        }
+        .button, input, label {
+            display: inline-block;
+            font-size: 1em;
+            margin: .5em 0;
+        }
+        input[type="checkbox"] {
+            display: inline-block;
+        }
+        input[type="password"]{
+            border: 1px solid #666;
+            width: 97%;
+            padding: .2em 1%;
+        }
+        .button, input[type="submit"] {
+            width: 100%;
+            background: #33C;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+        }
+        .success {
+            color: #0C6;
+        }
+        .error {
+            color: #F36;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Installation</h1>
+        <p>Surftime CMS</p>
+        <!-- Start Content -->
+        {%CONTENT%}
+
+    </div>
+</body>
+</html>
