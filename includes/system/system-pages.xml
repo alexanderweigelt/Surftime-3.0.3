@@ -18,7 +18,7 @@
 			<headline><![CDATA[ Sende eine Nachricht! ]]></headline>
 			<content>
 				<![CDATA[ 
-				<h2>Du m&ouml;chtest etwas mitteilen?</h2><div class="grid-3">{%CONTACTFORM_MESSAGE%} {%CONTACTFORM%}</div><div class="row"><div class="grid-3"><p>Tolle Nachrichten bekommt jeder gerne. Also wenn du etwas sagen m&ouml;chtest, dann nutze doch einfach das Kontaktformular. Jetzt ausf&uuml;llen und abschicken. Dann bekommst du innerhalb kurzer Zeit eine Antwort.</p></div></div>
+				<h2>Du m&ouml;chtest etwas mitteilen?</h2><div class="grid-6">{%CONTACTFORM_MESSAGE%} {%CONTACTFORM%}</div><div class="grid-6"><p>Tolle Nachrichten bekommt jeder gerne. Also wenn du etwas sagen m&ouml;chtest, dann nutze doch einfach das Kontaktformular. Jetzt ausf&uuml;llen und abschicken. Dann bekommst du innerhalb kurzer Zeit eine Antwort.</p></div>
 				]]>
 			</content>
 		</insert>

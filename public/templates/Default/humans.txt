@@ -1,0 +1,19 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+# TEAM
+
+    Your title: Webdesigner Freelancer Alexander Weigelt
+    Site: webdesign@alexander-weigelt.de, http://alexander-weigelt.de
+    Twitter: @le_webdesign
+    Location: Leipzig, Germany
+
+# THANKS
+
+    Name: Powered by Surftime CMS and Alexander Weigelt
+
+# TECHNOLOGY COLOPHON
+
+    Standards: HTML5, CSS3
+    Components: Apache Server Configs, jQuery, Modernizr
+    Software: PhpStorm, FileZilla
