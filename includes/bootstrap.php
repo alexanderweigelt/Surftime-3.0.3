@@ -75,15 +75,6 @@ define('DIR_IMAGES_THUMBNAILS', PROJECT_ROOT.'public/uploads/Thumbs/');
 /** Ordner in dem die groesseren Bilder abgelegt werden */
 define('DIR_IMAGES_BIG', PROJECT_ROOT.'public/uploads/Big/');
 
-
-/**
- * Start Autoloader
- *
- * *Description* Alle Funktionen aus Ordner laden  
- */
-	
-include CLASSES_PATH.'autoloader.php';
-
 /**
  * Include config.inc.php
  *
@@ -96,9 +87,18 @@ if(file_exists(CONFIG)){
 else{
 	//Fehler
 	$message = 'File: '.CONFIG.' not found ';
+    include_once (FUNCTIONS_PATH.'errorMessage.php');
     $html = errorMessage($message);
     exit($html);
 }
+
+/**
+ * Start Autoloader
+ *
+ * *Description* Alle Funktionen aus Ordner laden
+ */
+
+include CLASSES_PATH.'autoloader.php';
 
 /**
  * Define Sitepath
