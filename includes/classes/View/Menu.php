@@ -1,32 +1,32 @@
 <?php
-    
- /**
+
+/**
  * Create Menues
  *
- * *Description* 
+ * *Description*
  *
  * @author Alexander Weigelt <support@alexander-weigelt.de>
  * @link http://alexander-weigelt.de
  * @version Surftime CMS 3.0.3
  * @license http://creativecommons.org/licenses/by-nc-nd/4.0/legalcode CC BY-NC-ND 4.0
  */
- 
- namespace View; 
+
+namespace View;
 
 
 class Menu {
-	
+
 	public $arr_nav;
 	public $pages;
-	
+
 	public function __construct() {
-	
+
 		$this->arr_nav = new \Controller\NavController();
 		$this->pages = $this->arr_nav->entries;
 	}
-	
+
 	public function Navigation($class = array()){
-		
+
 		$_class = array_shift($class);
 		$css = !empty($_class) ? ' class="'.$_class.'"' : '';
 		$menu = "\n\t\t\t<ul".$css.">\n";
@@ -34,24 +34,28 @@ class Menu {
 		$menu .= "\t\t\t</ul>";
 		return $menu;
 	}
-	
+
 	public function Breadcrumb(){
-		
+
 	}
-	
-	public function SingleLink($page, $anchortxt = 'Warning: Specify Anchor Text!'){
-		
-		$site = array_shift($page);
-		$arr_entries = $this->pages->getEntry($site);
+
+	public function SingleLink($page){
+
+		// Default settings
+		$anchortxt = 'Warning: Specify Anchor Text!';
 		$title = '';
+
+		$site = $page[0];
+		$arr_entries = $this->pages->getEntry($site);
+
 		if($this->arr_nav->checkSite($site)){
 			$url = \Controller\Helpers::buildLink($site);
 			if(!empty($arr_entries['anchor'])){
 				$anchortxt = $arr_entries['anchor'];
 				$title = ' title="'.$arr_entries['title'].'"';
 			}
-			elseif(!empty($page)){
-				$anchortxt = $page[0];
+			if(!empty($page[1])){
+				$anchortxt = $page[1];
 			}
 		}
 		else{
@@ -60,7 +64,7 @@ class Menu {
 		$link ='<a href="'.$url.'"'.$title.'>'.$anchortxt.'</a>';
 		return $link;
 	}
-	
+
 	private final function buildMenu($menuArray){
 		$list = '';
 		foreach ($menuArray as $node)
@@ -79,9 +83,9 @@ class Menu {
 			}
 			$list .= "\t\t\t\t</li>\n";
 		}
-		
+
 		return $list;
-	} 
+	}
 }
 
 ?>
