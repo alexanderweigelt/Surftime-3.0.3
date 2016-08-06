@@ -18,15 +18,15 @@ class LoadExtensions {
 	
 	private static $plugin = array('head' => '', 'body' => '', 'library' => '');
 	
-/**
- * Plugin laden
- *
- * *Description* Pluginordner durchlaufen und valide Plugin includieren
- * 
- * @param 
- *
- * @return 
- */
+	/**
+	 * Plugin laden
+	 *
+	 * *Description* Pluginordner durchlaufen und valide Plugin includieren
+	 *
+	 * @param
+	 *
+	 * @return 
+	 */
  
 	public static function PluginLoader(){
 		foreach(glob(DIR_PLUGIN.'*/index.php') as $file){ 
@@ -34,16 +34,16 @@ class LoadExtensions {
 		}	
 	}
 	
-/**
- * Uebergebene Daten von Plugin
- *
- * *Description* Uebergebene Daten aus Aufruf Methode in Plugin. Verarbeite 
- * und diese auf jeder Seite im <head> oder am Ende des <body>
- * 
- * @param string, string
- *
- * @return 
- */
+	/**
+	 * Uebergebene Daten von Plugin
+	 *
+	 * *Description* Uebergebene Daten aus Aufruf Methode in Plugin. Verarbeite
+	 * und diese auf jeder Seite im <head> oder am Ende des <body>
+	 *
+	 * @param string, string
+	 *
+	 * @return
+	 */
  
 	public static function AddHTML($tag, $content){
 
@@ -62,35 +62,48 @@ class LoadExtensions {
 		}
 	}
 	
-/**
- * Inhalte aus Plugin zu Quelltext
- *
- * *Description* Fuege Meta oder Body Information von Plugins in geparsten Content der Seite ein
- * 
- * @param string
- *
- * @return string
- */
+	/**
+	 * Inhalte aus Plugin zu Quelltext
+	 *
+	 * *Description* Fuege Meta oder Body Information von Plugins in geparsten Content der Seite ein
+	 *
+	 * @param string
+	 *
+	 * @return string
+	 */
  
 	public static function AddPlugin($html){
         $add_meta = self::AddMeta();
         $add_body = self::AddBody();
         if(!empty($add_meta) or !empty($add_body)){
-            return str_replace(array('</head>', '</body>'), array(self::AddMeta(), self::AddBody()), $html);
+            return str_replace(['</head>', '</body>'], [$add_meta, $add_body], $html);
         }
 		else{
 		    return $html;
 		}
 	}
-	
+
+	/**
+	 * @return string
+     */
+
 	private static function AddMeta(){
 		return self::MergeLibraries()."\n".self::$plugin['head']."\n".'</head>';
 	}
-	
+
+	/**
+	 * @return string
+     */
+
 	private static function AddBody(){
 		return self::$plugin['body']."\n".'</body>';
 	}
-	
+
+	/**
+	 * @param string $name
+	 * @return string
+     */
+
 	private static function AddLibs($name = ''){
 		if(method_exists('\View\Library', $name)){
 			$libraries = new \View\Library();
@@ -101,10 +114,14 @@ class LoadExtensions {
 		}
 	}
 
+	/**
+	 * @return string
+     */
+
 	private function MergeLibraries(){
 		$content = '';
 		foreach(self::$plugin['library'] as $library => $set){
-			$content = self::AddLibs($library);
+			$content .= self::AddLibs($library);
 		}
 		return $content;
 	}

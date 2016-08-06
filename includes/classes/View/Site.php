@@ -56,8 +56,8 @@ class Site {
             ob_start();
             include $file;
             $html = ob_get_contents();
-            $output = \Model\LoadExtensions::AddPlugin($html);
             ob_end_clean();
+            $output = \Model\LoadExtensions::AddPlugin($html);
         }
         else{
 			$msg = "Template nicht gefunden";
