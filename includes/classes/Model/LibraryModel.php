@@ -31,12 +31,7 @@ class LibraryModel {
 		if(is_dir(LIBS_PATH.$request.'/')){
 			foreach(glob(LIBS_PATH.$request.'/*.{css,js}',GLOB_BRACE) as $file) {
 				if(is_file($file)){
-					if(\Controller\Helpers::getGlobals('Compression')){
-						$path[] = $file.'.gz';
-					}
-					else{
-						$path[] = $file;
-					}
+					$path[] = $file;
 				}
 			}
 		}
