@@ -93,7 +93,7 @@
 	<footer class="container centered">
 		<a href="#" class="scrollToTop">Top</a>
 		<!-- Diese Angaben müssen nach den Lizenzbedingungen erhalten bleiben -->
-		<small>&copy; 2014 <?php echo $this->Company; ?> &bull; Powered by Surftime CMS and <a href="http://alexander-weigelt.de">Alexander Weigelt</a>.</small>
+		<small>&copy; <?php echo date('Y') ?>  <?php echo $this->Company; ?> &bull; Powered by Surftime CMS and <a href="http://alexander-weigelt.de">Alexander Weigelt</a>.</small>
 	</footer>
 	<script src="<?php echo $this->PathTemplate; ?>js/settings.js"></script>
 </body>
