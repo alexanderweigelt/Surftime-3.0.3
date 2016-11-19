@@ -12,11 +12,16 @@
  */ 
  
  namespace Model;
- 
 
-class LoadExtensions {
+
+ /**
+  * Class LoadExtensions
+  * @package Model
+  */
+
+ class LoadExtensions {
 	
-	private static $plugin = array('head' => '', 'body' => '', 'library' => '');
+	private static $plugin = [ 'head' => '', 'body' => '', 'library' => '' ];
 	
 	/**
 	 * Plugin laden
@@ -24,8 +29,6 @@ class LoadExtensions {
 	 * *Description* Pluginordner durchlaufen und valide Plugin includieren
 	 *
 	 * @param
-	 *
-	 * @return 
 	 */
  
 	public static function PluginLoader(){
@@ -41,8 +44,6 @@ class LoadExtensions {
 	 * und diese auf jeder Seite im <head> oder am Ende des <body>
 	 *
 	 * @param string, string
-	 *
-	 * @return
 	 */
  
 	public static function AddHTML($tag, $content){
@@ -118,7 +119,7 @@ class LoadExtensions {
 	 * @return string
      */
 
-	private function MergeLibraries(){
+	private static function MergeLibraries(){
 		$content = '';
 		foreach(self::$plugin['library'] as $library => $set){
 			$content .= self::AddLibs($library);
