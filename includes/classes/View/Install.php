@@ -15,9 +15,20 @@
 namespace View;
 
 
+/**
+ * Class Install
+ * @package View
+ */
+
 class Install {
 
-    public function step1($message){
+	/**
+	 * @param $message
+	 *
+	 * @return string
+	 */
+
+	public function step1( $message ) {
         $html = '
         <p>Installiere in wenigen Schritten deine neue Website</p>
         <p>'.$message.'</p>
@@ -30,7 +41,13 @@ class Install {
         return $html;
     }
 
-    public function step2($data = array()){
+	/**
+	 * @param array $data
+	 *
+	 * @return string
+	 */
+
+	public function step2( $data = [] ) {
         $html = '
         <h2>Lizenz und Nutzungsvereinbarung</h2>
         <p>'.$data['cms']['name'].' fällt unter den Lizenzvertrag
@@ -62,7 +79,11 @@ class Install {
         return $html;
     }
 
-    public function step3(){
+	/**
+	 * @return string
+	 */
+
+	public function step3() {
         $html = '
         <form action="'.DIR.'" method="post">
             <input type="hidden" value="step4" name="action">
@@ -74,7 +95,13 @@ class Install {
         return $html;
     }
 
-    public function finalStep($data = array()){
+	/**
+	 * @param array $data
+	 *
+	 * @return string
+	 */
+
+	public function finalStep( $data = array() ) {
         $html = '
 		<p class="hint success">'.$data['message'].'</p>
 		<p class="hint">'.$data['firstlogin'].'
@@ -83,21 +110,38 @@ class Install {
         return $html;
     }
 
-    public function error($data){
+	/**
+	 * @param $data
+	 *
+	 * @return string
+	 */
+
+	public function error( $data ) {
         $html = '
         <p class="hint error">'.$data.'</p>
         ';
         return $html;
     }
 
-    private function compileContent($html, $content){
+	/**
+	 * @param $html
+	 * @param $content
+	 *
+	 * @return mixed
+	 */
+
+	private function compileContent( $html, $content ) {
         return str_replace('{%CONTENT%}', $content, $html);
     }
 
-    public function parse($message){
-        $output = '';
+	/**
+	 * @param $message
+	 *
+	 * @return mixed|string
+	 */
 
-        $file = PATH_PAGES.INSTALLPAGE;
+	public function parse( $message ) {
+		$file = PATH_PAGES . INSTALLPAGE;
         if (file_exists($file)) {
             $output = $this->compileContent(file_get_contents($file), $message);
         } else {

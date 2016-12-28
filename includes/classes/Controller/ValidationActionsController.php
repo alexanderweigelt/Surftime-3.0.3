@@ -1,42 +1,39 @@
 <?php
-    
+
  /**
  * Validate Actions Controller
  *
- * *Description* 
+  * *Description*
  *
  * @author Alexander Weigelt <support@alexander-weigelt.de>
  * @link http://alexander-weigelt.de
  * @version Surftime CMS 3.0.3
  * @license http://creativecommons.org/licenses/by-nc-nd/4.0/legalcode CC BY-NC-ND 4.0
- */ 
- 
- namespace Controller;
- 
+  */
 
-class ValidationActionsController {
-	
+ namespace Controller;
+
+
+ /**
+  * Class ValidationActionsController
+  * @package Controller
+  */
+ class ValidationActionsController {
+
 	/** Eigenschaften definieren */
-	private $required_fields = array();
-	private $fixed_part = array();
-	private $panels = array();
+	 private $required_fields = [];
+	 private $fixed_part = [];
+	 private $panels = [];
 	public $request;
 	public $entries;
-	
-/**
- * Konstruktor 
- *
- * *Description* 
- * 
- * @param
- *
- * @return 
- */
- 
+
+	 /**
+	  * Constructor
+	  *
+	  * *Description*
+	  */
+
 	public function __construct() {
-		$this->request = array_merge(\Controller\Helpers::Clean($_GET), $_POST);
-		$this->entries = new \Model\GetContent();
-		
 		//Pflichtfelder Eintrag Seiten definieren
 		$this->required_fields = array(
 			'site' => array('title','page','headline','indexation'),
@@ -44,29 +41,77 @@ class ValidationActionsController {
 			'user' => array('email','username','status'),
 			'settings' => array('firstname','lastname','street','postalzip','city','phone','email','company','opening','variable'),
 			'setup' => array('logout', 'maintenance', 'cache', 'maxwidth', 'maxheight')
-			);	
-			
+		);
+
 		// Fixe Systemseiten definieren, bei denen nur der Inhalt geändert werden kann.
 		// Sie sind nicht löschbar und auch der Pagename kann nicht geändert werden.
 		$this->fixed_part = array('index', 'imprint', 'contact', 'search', 'error');
-		
+
 		// Lege mögliche Panel für den Eintrag fest
 		$this->panels = array('panel1', 'panel2', 'panel3');
 	}
 
-/**
- * Formular Eintrag Seite validieren 
- *
- * *Description* 
- * 
- * @param string
- *
- * @return string
- */
- 
+	 /**
+	  * Set a instance from Model GetContent
+	  */
+
+	 public function setEntriesData() {
+		 $this->entries = new \Model\GetContent();
+	 }
+
+	 /**
+	  * Returns a Model GetContent
+	  *
+	  * @return \Model\GetContent
+	  */
+
+	 public function getEntriesData() {
+		 if ( ! $this->entries instanceof \Model\GetContent ) {
+			 $this->setEntriesData();
+		 }
+
+		 return $this->entries;
+	 }
+
+	 /**
+	  * Set data from request or params
+	  *
+	  * @param array $data
+	  */
+
+	 public function setRequestData( $data = [] ) {
+		 if ( ! empty( $data ) and is_array( $data ) ) {
+			 $this->request = $data;
+		 } else {
+			 $this->request = array_merge( \Controller\Helpers::Clean( $_GET ), $_POST );
+		 }
+	 }
+
+	 /**
+	  * Returns the data from request
+	  *
+	  * @return mixed
+	  */
+
+	 public function getRequestData() {
+		 return $this->request;
+	 }
+
+	 /**
+	  * Formular Eintrag Seite validieren
+	  *
+	  * *Description*
+	  *
+	  * @param string
+	  *
+	  * @return string
+	  */
+
 	public function validFormEntry($request){
-		
+
 		// Formular Pages validieren
+		$requiredSite = false;
+		$requiredNav  = false;
 		if(is_array($request)){
 			//Pflichtfelder prüfen
 			foreach($this->required_fields['site'] as $key){
@@ -99,7 +144,7 @@ class ValidationActionsController {
 			// sind alle Pflichtfelder ausgefüllt...
 			if($requiredSite and $requiredNav){
 				// Datenbankabfrage ob gesendete Page bereits existiert
-				$entry = $this->entries->getEntry($this->request['page']);
+				$entry = $this->getEntriesData()->getEntry( $this->request['page'] );
 				// Umwandeln in zugelassene Dateinmaen
 				$request['page'] = \Controller\Helpers::buildLinkName($request['page']);
 				// Prüfe ob eine ID mitgesendet wurde und diese auch mit der ID des Datensatz aus DB übereinstimmt
@@ -109,7 +154,7 @@ class ValidationActionsController {
 				// HTML Entities kodieren
 				foreach($request as $key => $value){
 					if($key == 'title' or $key == 'headline' or $key == 'anchor' or $key == 'description' or $key == 'keywords'){
-						$request[$key] = !empty($request[$key]) ? htmlentities(strip_tags($value), ENT_QUOTES, \Framework\Utility::getCharset()) : '';
+						$request[ $key ] = ! empty( $request[ $key ] ) ? htmlentities( strip_tags( trim( $value ) ), ENT_QUOTES, \Framework\Utility::getCharset() ) : '';
 					}
 				}
 			}
@@ -117,23 +162,24 @@ class ValidationActionsController {
 				return array();
 			}
 		}
-		return $request;	
+
+		return $request;
 	}
-	
-/**
- * Pruefe auf einzigartigen Page-Name
- *
- * *Description* 
- * 
- * @param string
- *
- * @return boolean
- */
- 
+
+	 /**
+	  * Pruefe auf einzigartigen Page-Name
+	  *
+	  * *Description*
+	  *
+	  * @param string
+	  *
+	  * @return boolean
+	  */
+
 	public function checkUniquePageName($name){
-		
+
 		//Prüfe auf bereits veregebene Seitennamen
-		$arrnav = $this->entries->getNavigation();
+		$arrnav = $this->getEntriesData()->getNavigation();
 		$unique = FALSE;
 		foreach($arrnav as $nav){
 			if($nav['page'] == $name){
@@ -146,17 +192,17 @@ class ValidationActionsController {
 		}
 		return $unique;
 	}
-	
-/**
- * Pruefe auf feste Systemseite
- *
- * *Description* 
- * 
- * @param string
- *
- * @return boolean
- */
- 
+
+	 /**
+	  * Pruefe auf feste Systemseite
+	  *
+	  * *Description*
+	  *
+	  * @param string
+	  *
+	  * @return boolean
+	  */
+
 	public function checkFixedPages($page){
 		if(in_array($page, $this->fixed_part)){
 			return FALSE;
@@ -165,17 +211,17 @@ class ValidationActionsController {
 			return TRUE;
 		}
 	}
-	
-/**
- * Pruefe moegliche Panel
- *
- * *Description* 
- * 
- * @param string
- *
- * @return boolean
- */
- 
+
+	 /**
+	  * Pruefe moegliche Panel
+	  *
+	  * *Description*
+	  *
+	  * @param string
+	  *
+	  * @return boolean
+	  */
+
 	public function validPanel($panel){
 		if(in_array($panel['number'], $this->panels) and isset($panel['widget'])){
 			return TRUE;
@@ -184,29 +230,29 @@ class ValidationActionsController {
 			return FALSE;
 		}
 	}
-	
-/**
- * Pruefe hochgeladene Bilder
- *
- * *Description* 
- * 
- * @param string
- *
- * @return boolean
- */
- 
+
+	 /**
+	  * Pruefe hochgeladene Bilder
+	  *
+	  * *Description*
+	  *
+	  * @param string
+	  *
+	  * @return boolean
+	  */
+
 	public function checkUploadedImages($files){
-		
+
         // fehlerbehandlung bilder
         $imagesize = false;
         $imagetyp = false;
 		$whitelist = array('jpg','png','gif'); //zugelassene Dateiendungen
-		
+
         if(is_array($files))
         {
             // maximale Dateigroesse Bilder ermitteln
             $max_size = \Controller\Helpers::maxSize(count($files));
-			
+
 			foreach($files as $value)
 			{
 				//Feststellen ob etwas zum Upload bereit steht
@@ -216,12 +262,12 @@ class ValidationActionsController {
 					$path_parts = pathinfo($value['name']);
 					//Vergleichen ob alles korrekt ist
 					if(in_array($path_parts['extension'], $whitelist)){
-						//Typ der Grafik als Konstante ermitteln 
+						//Typ der Grafik als Konstante ermitteln
 						//(wobei: IMAGETYPE_GIF = GIF, IMAGETYPE_JPEG = JPG, IMAGETYPE_PNG = PNG)
 						$imgtype = exif_imagetype($value['tmp_name']);
 						if($imgtype == IMAGETYPE_GIF or $imgtype == IMAGETYPE_JPEG or $imgtype == IMAGETYPE_PNG){
 							$imagetyp = true;
-						}    
+						}
 					}
 
 					// Dateigroesse pruefen
@@ -234,26 +280,26 @@ class ValidationActionsController {
 				}
 			}
 			return true;
-        }      		
+        }
 	}
-	
-/**
- * Pruefe einzigartigen Dateiname Bild
- *
- * *Description* 
- * 
- * @param string
- *
- * @return boolean
- */
- 
+
+	 /**
+	  * Pruefe einzigartigen Dateiname Bild
+	  *
+	  * *Description*
+	  *
+	  * @param string
+	  *
+	  * @return boolean
+	  */
+
 	public function checkUniqueFilename($srcPath, $dstName){
-		
+
 		$unique = true;
 		$path_parts = pathinfo($srcPath);
 		$Filename = \Controller\Helpers::buildLinkName($dstName).'.'.$path_parts['extension'];
 		// Hole alle Bilder und durchlaufe Test
-		foreach($this->entries->getAllImages() as $images){
+		foreach ( $this->getEntriesData()->getAllImages() as $images ) {
 			if($images['basename'] == $Filename){
 				$unique = false;
 				break;
@@ -261,20 +307,20 @@ class ValidationActionsController {
 		}
 		return $unique;
 	}
-	
-/**
- * Validiere Variablen
- *
- * *Description* 
- * 
- * @param array
- *
- * @return array
- */
- 
+
+	 /**
+	  * Validiere Variablen
+	  *
+	  * *Description*
+	  *
+	  * @param array
+	  *
+	  * @return array
+	  */
+
 	public function validVarsSetting($request){
-		
-		$settings = $this->entries->getSiteSettings();
+
+		$settings = $this->getEntriesData()->getSiteSettings();
 		foreach($this->required_fields['settings'] as $key){
 			if(!array_key_exists($key, $request)){
 				$request[$key] = $settings[$key];
@@ -288,17 +334,17 @@ class ValidationActionsController {
 		}
 		return $request;
 	}
-	
-/**
- * Validiere Daten Setup
- *
- * *Description* 
- * 
- * @param array
- *
- * @return array
- */
- 
+
+	 /**
+	  * Validiere Daten Setup
+	  *
+	  * *Description*
+	  *
+	  * @param array
+	  *
+	  * @return array
+	  */
+
  	public function validSetup($request){
 		$maxSize = 1260;
 		$minSize = 180;
@@ -325,19 +371,19 @@ class ValidationActionsController {
 			return array();
 		}
 	}
-	
-/**
- * Validiere Formular Benutzerverwaltung
- *
- * *Description* 
- * 
- * @param string
- *
- * @return boolean
- */
- 
+
+	 /**
+	  * Validiere Formular Benutzerverwaltung
+	  *
+	  * *Description*
+	  *
+	  * @param string
+	  *
+	  * @return boolean
+	  */
+
 	public function validFormUser($request){
-		
+
 		//Pflichtfelder User
 		if(is_array($request)){
 			foreach($this->required_fields['user'] as $key){
@@ -360,27 +406,27 @@ class ValidationActionsController {
 				if(empty($request['password']) or $request['password'] !== $request['confirmpassword']){
 					$required = FALSE;
 				}
-			}	
+			}
 		}
-		
+
 		return $required;
 	}
-	
-/**
- * Pruefe auf einzigartigen Benutzernamen
- *
- * *Description* 
- * 
- * @param string
- *
- * @return boolean
- */
- 
+
+	 /**
+	  * Pruefe auf einzigartigen Benutzernamen
+	  *
+	  * *Description*
+	  *
+	  * @param string
+	  *
+	  * @return boolean
+	  */
+
 	public function checkUniqueUsername($userName){
 		// Prüfe auf einmaligen Nutzername
 		$unique = TRUE;
-		if(!empty($this->request['user']) and $userName != $this->request['user']){		
-			foreach($this->entries->getAllUsers() as $user){
+		if ( ! empty( $this->request['user'] ) and $userName != $this->request['user'] ) {
+			foreach ( $this->getEntriesData()->getAllUsers() as $user ) {
 				if($user['username'] == $userName){
 					$unique = FALSE;
 					break;
@@ -389,21 +435,21 @@ class ValidationActionsController {
 		}
 		return $unique;
 	}
-	
-/**
- * Pruefe auf letzen Administrator
- *
- * *Description* verhindert ein Loeschen des letzten Benutzer mit Administratorrechten
- * 
- * @param 
- *
- * @return boolean
- */
- 
+
+	 /**
+	  * Pruefe auf letzen Administrator
+	  *
+	  * *Description* verhindert ein Loeschen des letzten Benutzer mit Administratorrechten
+	  *
+	  * @param
+	  *
+	  * @return boolean
+	  */
+
 	public function checkLastAdmin(){
 		// Prüfe ob noch mindestens ein Administrator existiert
 		$admin = 0;
-		foreach($this->entries->getAllUsers() as $user){
+		foreach ( $this->getEntriesData()->getAllUsers() as $user ) {
 			if($user['status'] == 'admin'){
 				++$admin;
 			}
@@ -414,7 +460,7 @@ class ValidationActionsController {
 		else{
 			return FALSE;
 		}
-	}	
+	}
 }
 
 ?>

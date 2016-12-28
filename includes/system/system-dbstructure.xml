@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<database>
+    <meta>
+        <columns>
+            <_id>
+                <type>INT(11)</type>
+                <null>NOT NULL</null>
+                <extra>AUTO_INCREMENT</extra>
+            </_id>
+            <page_id>
+                <type>INT(11)</type>
+                <null>NOT NULL</null>
+            </page_id>
+            <indexation>
+                <type>ENUM('index','noindex')</type>
+                <null>NOT NULL</null>
+                <default>index</default>
+            </indexation>
+            <title>
+                <type>VARCHAR(255)</type>
+                <null>NOT NULL</null>
+            </title>
+            <keywords>
+                <type>VARCHAR(255)</type>
+                <null>NOT NULL</null>
+            </keywords>
+            <description>
+                <type>VARCHAR(255)</type>
+                <null>NOT NULL</null>
+            </description>
+        </columns>
+        <constraints>
+            <primary>_id</primary>
+        </constraints>
+        <engine>MyISAM</engine>
+        <comment>User Data</comment>
+    </meta>
+    <navigation>
+        <columns>
+            <_id>
+                <type>INT(11)</type>
+                <null>NOT NULL</null>
+                <extra>AUTO_INCREMENT</extra>
+            </_id>
+            <site_id>
+                <type>INT(11)</type>
+                <null>NOT NULL</null>
+            </site_id>
+            <sorting>
+                <type>INT(11)</type>
+                <null>NOT NULL</null>
+            </sorting>
+            <parent>
+                <type>INT(11)</type>
+                <null>NOT NULL</null>
+            </parent>
+            <anchor>
+                <type>VARCHAR(255)</type>
+                <null>NOT NULL</null>
+            </anchor>
+        </columns>
+        <constraints>
+            <primary>_id</primary>
+        </constraints>
+        <engine>MyISAM</engine>
+        <comment>Navigation</comment>
+    </navigation>
+    <settings>
+        <columns>
+            <var_id>
+                <type>INT(11)</type>
+                <null>NOT NULL</null>
+            </var_id>
+            <slogan>
+                <type>VARCHAR(255)</type>
+                <null>NOT NULL</null>
+            </slogan>
+            <firstname>
+                <type>VARCHAR(255)</type>
+                <null>NOT NULL</null>
+            </firstname>
+            <lastname>
+                <type>VARCHAR(255)</type>
+                <null>NOT NULL</null>
+            </lastname>
+            <street>
+                <type>VARCHAR(255)</type>
+                <null>NOT NULL</null>
+            </street>
+            <postalzip>
+                <type>VARCHAR(5)</type>
+                <null>NOT NULL</null>
+            </postalzip>
+            <city>
+                <type>VARCHAR(255)</type>
+                <null>NOT NULL</null>
+            </city>
+            <phone>
+                <type>VARCHAR(255)</type>
+                <null>NOT NULL</null>
+            </phone>
+            <email>
+                <type>VARCHAR(190)</type>
+                <null>NOT NULL</null>
+            </email>
+            <company>
+                <type>VARCHAR(255)</type>
+                <null>NOT NULL</null>
+            </company>
+            <opening>
+                <type>VARCHAR(255)</type>
+                <null>NOT NULL</null>
+            </opening>
+            <variable>
+                <type>TEXT</type>
+                <null>NOT NULL</null>
+            </variable>
+        </columns>
+        <constraints>
+            <unique>var_id</unique>
+            <primary>var_id</primary>
+        </constraints>
+        <engine>MyISAM</engine>
+        <comment>Site Settings</comment>
+    </settings>
+    <site>
+        <columns>
+            <id>
+                <type>INT(11)</type>
+                <null>NOT NULL</null>
+                <extra>AUTO_INCREMENT</extra>
+            </id>
+            <page>
+                <type>VARCHAR(255)</type>
+                <null>NOT NULL</null>
+            </page>
+            <created>
+                <type>DATE</type>
+                <null>NOT NULL</null>
+            </created>
+            <headline>
+                <type>VARCHAR(255)</type>
+                <null>NOT NULL</null>
+            </headline>
+            <content>
+                <type>TEXT</type>
+                <null>NOT NULL</null>
+            </content>
+        </columns>
+        <constraints>
+            <unique>page</unique>
+            <primary>id</primary>
+            <fulltext>headline, content</fulltext>
+        </constraints>
+        <engine>MyISAM</engine>
+        <comment>Page Content</comment>
+    </site>
+    <setup>
+        <columns>
+            <set_id>
+                <type>INT(11)</type>
+                <null>NOT NULL</null>
+                <extra>AUTO_INCREMENT</extra>
+            </set_id>
+            <template>
+                <type>VARCHAR(255)</type>
+                <null>NOT NULL</null>
+            </template>
+            <logout>
+                <type>TINYINT(1)</type>
+                <null>NOT NULL</null>
+            </logout>
+            <maintenance>
+                <type>TINYINT(1)</type>
+                <null>NOT NULL</null>
+            </maintenance>
+            <compress>
+                <type>TINYINT(1)</type>
+                <null>NOT NULL</null>
+            </compress>
+            <language>
+                <type>VARCHAR(2)</type>
+                <null>NOT NULL</null>
+                <default>en</default>
+            </language>
+            <maxwidth>
+                <type>INT(4)</type>
+                <attribute>UNSIGNED</attribute>
+                <null>NOT NULL</null>
+            </maxwidth>
+            <maxheight>
+                <type>INT(4)</type>
+                <attribute>UNSIGNED</attribute>
+                <null>NOT NULL</null>
+            </maxheight>
+        </columns>
+        <constraints>
+            <unique>set_id</unique>
+            <primary>set_id</primary>
+        </constraints>
+        <engine>MyISAM</engine>
+        <comment>System Setup</comment>
+    </setup>
+    <panel>
+        <columns>
+            <_id>
+                <type>INT(11)</type>
+                <null>NOT NULL</null>
+                <extra>AUTO_INCREMENT</extra>
+            </_id>
+            <number>
+                <type>VARCHAR(255)</type>
+                <null>NOT NULL</null>
+            </number>
+            <last_modified>
+                <type>DATE</type>
+                <null>NOT NULL</null>
+            </last_modified>
+            <widget>
+                <type>TEXT</type>
+                <null>NOT NULL</null>
+            </widget>
+        </columns>
+        <constraints>
+            <primary>_id</primary>
+        </constraints>
+        <engine>MyISAM</engine>
+        <comment>Widget Area Content</comment>
+    </panel>
+    <user>
+        <columns>
+            <id>
+                <type>INT(10)</type>
+                <attribute>UNSIGNED</attribute>
+                <null>NOT NULL</null>
+                <extra>AUTO_INCREMENT</extra>
+            </id>
+            <email>
+                <type>VARCHAR(190)</type>
+                <null>NOT NULL</null>
+            </email>
+            <username>
+                <type>VARCHAR(17)</type>
+                <null>NOT NULL</null>
+            </username>
+            <password>
+                <type>VARCHAR(60)</type>
+                <null>NOT NULL</null>
+            </password>
+            <registration_date>
+                <type>DATETIME</type>
+                <null>NOT NULL</null>
+            </registration_date>
+            <code>
+                <type>VARCHAR(40)</type>
+                <default>NULL</default>
+            </code>
+            <status>
+                <type>ENUM('admin','user')</type>
+                <null>NOT NULL</null>
+            </status>
+        </columns>
+        <constraints>
+            <unique>email,username</unique>
+            <primary>id</primary>
+        </constraints>
+        <engine>MyISAM</engine>
+        <comment>User Data</comment>
+    </user>
+</database>

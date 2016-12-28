@@ -12,9 +12,14 @@
  */ 
  
  namespace Controller;
- 
 
-class InstallController {
+
+ /**
+  * Class InstallController
+  * @package Controller
+  */
+
+ class InstallController {
 	
 	/** Eigenschaften definieren */
 	private $install;
@@ -22,13 +27,9 @@ class InstallController {
 	public $review;
 	
     /**
-     * Konstruktor
+     * Constructor
      *
      * *Description*
-     *
-     * @param
-     *
-     * @return void
      */
  
 	public function __construct() {
@@ -40,7 +41,6 @@ class InstallController {
         \Framework\Utility::setTimezone();
 
         $this->site = new \View\Install();
-        $this->install = new \Model\InstallModel();
         $this->entries = new \Model\GetContent();
 
         // Neue Session starten
@@ -52,9 +52,7 @@ class InstallController {
 	 *
 	 * *Description*
 	 *
-	 * @param
-	 *
-	 * @return
+	 * @return string
 	 */
 
 	public function run(){
@@ -71,9 +69,7 @@ class InstallController {
      *
      * *Description*
      *
-     * @param
-     *
-     * @return array
+     * @return mixed
      */
 	
 	public function display(){
@@ -91,10 +87,6 @@ class InstallController {
      * Installation System starten
      *
      * *Description*
-     *
-     * @param
-     *
-     * @return
      */
 
     public function startInstall(){
@@ -119,10 +111,6 @@ class InstallController {
      * Load action Models and Controllers
      *
      * *Description*
-     *
-     * @param
-     *
-     * @return
      */
 
     public function loadAction(){
@@ -155,10 +143,6 @@ class InstallController {
      * Step 1
      *
      * *Description*
-     *
-     * @param
-     *
-     * @return
      */
 
     public function firstStep(){
@@ -178,10 +162,6 @@ class InstallController {
      * Step 2
      *
      * *Description*
-     *
-     * @param
-     *
-     * @return array
      */
 
     public function secondStep(){
@@ -201,10 +181,6 @@ class InstallController {
      * Step 3
      *
      * *Description*
-     *
-     * @param
-     *
-     * @return array
      */
 
     public function thirdStep(){
@@ -222,23 +198,32 @@ class InstallController {
      * Final Step
      *
      * *Description*
-     *
-     * @param
-     *
-     * @return array
      */
 
     public function finalStep(){
         if($this->session->readSession('install_step') === 4) {
             if($this->request['password'] === INSTALL_PASS) {
-                $successInstall = $this->install->runInstallation();
-                $this->session->deleteSession('install_step');
-                $arrMessage['firstlogin'] = '
+	            $this->session->writeSession( 'role', 'admin' );
+	            $this->install = new \Model\InstallModel();
+	            if ( $this->install->runInstallation() ) {
+		            $successInstall['message'] = 'Success install: <br>' . "\n";
+		            foreach ( $this->install->getSuccessInstallation() as $key => $value ) {
+			            $successInstall['message'] .= "\n <br><strong>" . $key . '</strong><br><br>';
+			            foreach ( $value as $text ) {
+				            $successInstall['message'] .= "\n" . '* ' . $text . '<br>' . "\n";
+			            }
+		            }
+		            $arrMessage['firstlogin'] = '
                         <p>Administration - Login <br>
                         Username: ' . \Model\InstallModel::DEFAULT_USER . '<br>
                         Password: ' . \Model\InstallModel::DEFAULT_PASS . '</p>';
-                $message = array_merge($successInstall, $arrMessage);
-                $this->view = $this->site->finalStep($message);
+		            $message                  = array_merge( $successInstall, $arrMessage );
+		            $this->session->deleteSession( 'install_step' );
+		            $this->view = $this->site->finalStep( $message );
+	            } else {
+		            $this->session->destroySession();
+		            $this->view = $this->site->error( 'Fehler: Schreiben der Datenbanktabellen nicht möglich!' );
+	            }
             }
             else{
                 $this->view = $this->site->error('Das Installationspasswort stimmt nicht überein!');
@@ -255,10 +240,6 @@ class InstallController {
 	 * Sende Header-Information
 	 *
 	 * *Description* Sende Header Information, Ausgabe aller PHP header()
-	 *
-	 * @param
-	 *
-	 * @return array
 	 */
 
 	private function sendAllHeaders(){

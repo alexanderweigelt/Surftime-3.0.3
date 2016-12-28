@@ -44,6 +44,13 @@ define('PATH_MAIL_TPL', PROJECT_ROOT.'public/mail/');
 /** Ordner Plugin */
 define('DIR_PLUGIN',PROJECT_ROOT.'public/plugin/');
 
+/*
+ * Setup and System Files
+ */
+
+define( 'SYSTEM_DB_STRUCTURE', SYSTEM_FILES . 'system-dbstructure.xml' );
+define( 'SYSTEM_CONTENT', SYSTEM_FILES . 'system-content.xml' );
+
 /**
  * Statische Seiten & Inhalte
  *
@@ -60,7 +67,9 @@ define('MAINTENANCE','maintenance.html');
 /** HTML-Inhalt Kontaktformular */ 
 define('CONTACTFORM','contact.html'); 
 /** HTML-Inhalt Suchformular */
-define('SEARCHFORM','search.html'); 
+define( 'SEARCHFORM', 'search.html' );
+/** XML Daten für Beispielseiten */
+define( 'SYSTEM_SAMPLE_DATA', PROJECT_ROOT . 'public/local/sample-data.xml' );
 
 /**
  * Pfade Upload-Ordner und Bilder

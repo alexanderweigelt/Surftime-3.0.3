@@ -12,23 +12,24 @@
  */ 
  
  namespace Controller;
- 
 
-class AdminController {
+
+ /**
+  * Class AdminController
+  * @package Controller
+  */
+
+ class AdminController {
 	
 	/** Eigenschaft definieren */
     public $login;
 	public $entries;
-	public $success = array();
+	public $success = [];
 	
 /**
- * Konstruktor 
+ * Constructor
  *
- * *Description* 
- * 
- * @param
- *
- * @return 
+ * *Description*
  */
  
     public function __construct() {	
@@ -66,6 +67,8 @@ class AdminController {
 		// Load action Models and Controllers
 		if(isset($this->request['action']) and $this->login->CheckLogin()){
 			$action = new \Controller\ActionsController();
+			$action->setRequestData( $this->request );
+			$action->entries = $this->entries;
 			
 			switch ($this->request['action']) {
 				
@@ -210,7 +213,7 @@ class AdminController {
  */
  
 	public function DataStart(){
-		$data = array();
+		$data = [];
 		//Split Entries for pagination
 		$num = (isset($this->request['num']) and is_numeric($this->request['num'])) ? (int)$this->request['num'] : 0;
 		$limit = 10;

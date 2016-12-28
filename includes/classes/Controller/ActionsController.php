@@ -12,40 +12,41 @@
  */ 
  
  namespace Controller;
- 
 
-class ActionsController extends \Controller\ValidationActionsController {
-	
-/**
- * Konstruktor 
- *
- * *Description* 
- * 
- * @param
- *
- * @return 
- */
+
+ /**
+  * Class ActionsController
+  * @package Controller
+  */
+
+ class ActionsController extends \Controller\ValidationActionsController {
+
+	 /**
+	  * Constructor
+	  *
+	  * *Description*
+	  */
  
 	public function __construct(){
 		parent::__construct();
 	}
-	
-/**
- * Eintrag setzen
- *
- * *Description* Setzt einen neuen Einrag in die Datenbank
- * 
- * @param
- *
- * @return array 
- */
+
+	 /**
+	  * Eintrag setzen
+	  *
+	  * *Description* Setzt einen neuen Einrag in die Datenbank
+	  *
+	  * @param
+	  *
+	  * @return array
+	  */
 		
 	public function setEntry(){
 		
 		$this->settings = new \Model\SetContent();
 		$arrEntry = $this->validFormEntry($this->request['setEntry']);
 		if(!empty($arrEntry)){
-			if(LIMIT_PAGES >= count($this->entries->getEntries())){
+			if ( LIMIT_PAGES >= count( $this->getEntriesData()->getEntries() ) ) {
 				if($this->checkUniquePageName($arrEntry['page'])){
 					if($this->settings->insertEntry($arrEntry)){
 						//Erfolgsmeldung Eintrag
@@ -73,16 +74,16 @@ class ActionsController extends \Controller\ValidationActionsController {
 		//
 		return $successInsert;
 	}
-	
-/**
- * Eintrag editieren
- *
- * *Description* 
- * 
- * @param
- *
- * @return array 
- */
+
+	 /**
+	  * Eintrag editieren
+	  *
+	  * *Description*
+	  *
+	  * @param
+	  *
+	  * @return array
+	  */
  
 	public function editEntry(){
 		
@@ -113,16 +114,16 @@ class ActionsController extends \Controller\ValidationActionsController {
 		
 		return $successEdit;	
 	}
-	
-/**
- * Eintrag entfernen
- *
- * *Description* 
- * 
- * @param
- *
- * @return array 
- */
+
+	 /**
+	  * Eintrag entfernen
+	  *
+	  * *Description*
+	  *
+	  * @param
+	  *
+	  * @return array
+	  */
  
 	public function clearEntry(){
 		
@@ -149,21 +150,21 @@ class ActionsController extends \Controller\ValidationActionsController {
 		}
 		return $successDelete;
 	}
-	
-/**
- * Bild speichern
- *
- * *Description* 
- * 
- * @param
- *
- * @return array
- */
- 
+
+	 /**
+	  * Bild speichern
+	  *
+	  * *Description*
+	  *
+	  * @param
+	  *
+	  * @return array
+	  */
+
 	public function saveImage(){
 		
-		$image = new \Model\ImageModel();
-		$image->settings = $this->entries->getSetup();
+		$image           = new \Model\ImageModel();
+		$image->settings = $this->getEntriesData()->getSetup();
 		// Pfad des temp. Bild und neuen Dateiname aus Request
 		$path_tmp = $this->request['tempimage'];
 		$img_name = $this->request['filename'];
@@ -196,16 +197,16 @@ class ActionsController extends \Controller\ValidationActionsController {
 		}
 		return $successSave;		
 	}
-	
-/**
- * Bilder entfernen
- *
- * *Description* 
- * 
- * @param
- *
- * @return boolean
- */
+
+	 /**
+	  * Bilder entfernen
+	  *
+	  * *Description*
+	  *
+	  * @param
+	  *
+	  * @return boolean
+	  */
  
 	public function removeAllImages(){
 		
@@ -231,16 +232,16 @@ class ActionsController extends \Controller\ValidationActionsController {
 		}
 		return ($unset_thumb and $unset_big or $unset_temp) ? TRUE : FALSE;
 	}
-	
-/**
- * Bild hochladen
- *
- * *Description* 
- * 
- * @param
- *
- * @return array 
- */
+
+	 /**
+	  * Bild hochladen
+	  *
+	  * *Description*
+	  *
+	  * @param
+	  *
+	  * @return array
+	  */
  
 	public function uploadFile(){
 		
@@ -280,23 +281,23 @@ class ActionsController extends \Controller\ValidationActionsController {
 		}
 		return $successSetting;
 	}
-	
-/**
- * Nutzerdaten speichern
- *
- * *Description* 
- * 
- * @param
- *
- * @return array 
- */
+
+	 /**
+	  * Nutzerdaten speichern
+	  *
+	  * *Description*
+	  *
+	  * @param
+	  *
+	  * @return array
+	  */
  
 	public function setUserData(){
 		
 		$this->setuser = new \Model\SetContent();
 		$request = $this->request['setUser'];
 		// Prüfe auf Benutzerrechte zur Änderung bzw. zum neu anlegen
-		if($this->entries->getRole() == 'admin' and count($this->entries->getAllUsers()) <= LIMIT_USER){
+		if ( $this->getEntriesData()->getRole() == 'admin' and count( $this->getEntriesData()->getAllUsers() ) <= LIMIT_USER ) {
 			// Formularvalidierung
 			if($this->validFormUser($request)){
 				//Check Username
@@ -352,23 +353,23 @@ class ActionsController extends \Controller\ValidationActionsController {
 		}
 		return $successSetUser;
 	}
-	
-/**
- * Nutzer entfernen
- *
- * *Description* 
- * 
- * @param
- *
- * @return array 
- */
+
+	 /**
+	  * Nutzer entfernen
+	  *
+	  * *Description*
+	  *
+	  * @param
+	  *
+	  * @return array
+	  */
  
 	public function removeThisUser(){
 		
 		$this->setuser = new \Model\SetContent();
-		$userData = $this->entries->getUserData($this->request['username']);
-		$lastAdmin =  $userData['status'] == 'user' ? TRUE : $this->checkLastAdmin();
-		if(!empty($this->request['username']) and $this->entries->getRole() == 'admin' and $lastAdmin){
+		$userData      = $this->getEntriesData()->getUserData( $this->request['username'] );
+		$lastAdmin     =  $userData['status'] == 'user' ? TRUE : $this->checkLastAdmin();
+		if ( ! empty( $this->request['username'] ) and $this->getEntriesData()->getRole() == 'admin' and $lastAdmin ) {
 			if($this->setuser->deleteUser($this->request['username'])){
 				//Erfolgsmeldung Eintrag gespeichert
 				$successRemoveUser = array('error' => false, 'message' => '<strong>Congratulations:</strong> User removed');
@@ -383,22 +384,22 @@ class ActionsController extends \Controller\ValidationActionsController {
 		}
 		return $successRemoveUser;
 	}
-	
-/**
- * Layout speichern
- *
- * *Description* 
- * 
- * @param
- *
- * @return array 
- */
+
+	 /**
+	  * Layout speichern
+	  *
+	  * *Description*
+	  *
+	  * @param
+	  *
+	  * @return array
+	  */
  
 	public function chooseTheme(){
 	
 		$this->setTPL = new \Model\SetContent();
 		$tpl['template'] = \Controller\Helpers::Clean($this->request['theme']['select']);
-		if($this->entries->getRole() == 'admin'){
+		if ( $this->getEntriesData()->getRole() == 'admin' ) {
 			if(!empty($tpl['template'])){		
 				if($this->setTPL->setSetup($tpl, 'template')){
 					$successChooseTheme = array('error' => false, 'message' => '<strong>Congratulations:</strong>  Updated Template');
@@ -417,15 +418,15 @@ class ActionsController extends \Controller\ValidationActionsController {
 		return $successChooseTheme;
 	}
 
-/**
- * Inhalt Panel aktualisieren
- *
- * *Description* Veranlasst eine Validierung des übergebenen Inhalt. Danach startet der Update in Datenbank für jeweiliges Panel.
- * 
- * @param
- *
- * @return array 
- */	
+	 /**
+	  * Inhalt Panel aktualisieren
+	  *
+	  * *Description* Veranlasst eine Validierung des übergebenen Inhalt. Danach startet der Update in Datenbank für jeweiliges Panel.
+	  *
+	  * @param
+	  *
+	  * @return array
+	  */
 	
 	public function updatePanel(){
 		
@@ -446,21 +447,21 @@ class ActionsController extends \Controller\ValidationActionsController {
 		return $successUpdatePanel;
 	}
 
-/**
- * Systemeinstellungen setzen
- *
- * *Description* Veranlasst eine Validierung des übergebenen Inhalt. Danach werden die Einstellungen in der DB gespeichert.
- * 
- * @param
- *
- * @return array 
- */
+	 /**
+	  * Systemeinstellungen setzen
+	  *
+	  * *Description* Veranlasst eine Validierung des übergebenen Inhalt. Danach werden die Einstellungen in der DB gespeichert.
+	  *
+	  * @param
+	  *
+	  * @return array
+	  */
  
  	public function Setup(){
 		
 		$this->setup = new \Model\SetContent();
 		$requestSetup = $this->request['setup'];
-		if($this->entries->getRole() == 'admin'){
+	    if ( $this->getEntriesData()->getRole() == 'admin' ) {
 			$setup = $this->validSetup($requestSetup);
 			if(!empty($setup)){
 				if($this->setup->setSetup($setup, 'system')){
@@ -478,8 +479,8 @@ class ActionsController extends \Controller\ValidationActionsController {
 		else{
 			$successSetup = array('error' => true, 'message' => '<strong>Warning:</strong>  Missing User rights');
 		}
-		//
-		return $successSetup;
+
+	    return $successSetup;
 	}
 }
 

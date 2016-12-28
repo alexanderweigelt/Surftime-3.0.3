@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<database>
+	<site>
+		<insert>
+			<page>index</page>
+			<created>[[%DATE%]]</created>
+            <headline><![CDATA[ Home ]]></headline>
+			<content>
+				<![CDATA[ 
+				Enter Content Here
+				]]>
+			</content>
+		</insert>
+		<insert>
+			<page>contact</page>
+			<created>[[%DATE%]]</created>
+            <headline><![CDATA[ Contact ]]></headline>
+			<content>
+				<![CDATA[ 
+				Enter Content Here
+				]]>
+			</content>
+		</insert>
+		<insert>
+			<page>imprint</page>
+			<created>[[%DATE%]]</created>
+            <headline><![CDATA[ Imprint ]]></headline>
+			<content>
+				<![CDATA[ 
+				Enter Content Here
+				]]>
+			</content>
+		</insert>
+		<insert>
+			<page>search</page>
+			<created>[[%DATE%]]</created>
+            <headline><![CDATA[ Search result ]]></headline>
+			<content>
+				<![CDATA[
+				Enter Content Here
+				]]>
+			</content>
+		</insert>
+		<insert>
+			<page>error</page>
+			<created>[[%DATE%]]</created>
+            <headline><![CDATA[ Error ]]></headline>
+			<content>
+				<![CDATA[ 
+				Enter Content Here
+				]]>
+			</content>
+		</insert>
+	</site>
+	<meta>
+		<insert>
+			<page_id>1</page_id>
+			<indexation>index</indexation>
+            <title>Homepage</title>
+            <keywords></keywords>
+            <description></description>
+		</insert>
+		<insert>
+			<page_id>2</page_id>
+			<indexation>index</indexation>
+            <title>Contact</title>
+			<keywords></keywords>
+			<description></description>
+		</insert>
+		<insert>
+			<page_id>3</page_id>
+			<indexation>noindex</indexation>
+            <title>Imprint</title>
+			<keywords></keywords>
+			<description></description>
+		</insert>
+		<insert>
+			<page_id>4</page_id>
+			<indexation>noindex</indexation>
+            <title>Search</title>
+			<keywords></keywords>
+			<description></description>
+		</insert>
+		<insert>
+			<page_id>5</page_id>
+			<indexation>noindex</indexation>
+            <title>Error</title>
+			<keywords></keywords>
+			<description></description>
+		</insert>
+	</meta>
+	<navigation>
+		<insert>
+			<site_id>1</site_id>
+			<sorting>1</sorting>
+			<parent>0</parent>
+            <anchor>Home</anchor>
+		</insert>
+		<insert>
+			<site_id>2</site_id>
+			<sorting>2</sorting>
+			<parent>0</parent>
+            <anchor>Contact</anchor>
+		</insert>
+	</navigation>
+	<settings>
+		<insert>
+			<var_id>1</var_id>
+            <slogan>slogan</slogan>
+            <firstname>surname</firstname>
+            <lastname>lastname</lastname>
+            <street>street</street>
+			<postalzip>01234</postalzip>
+            <city>city</city>
+			<phone>0123 456789</phone>
+			<email>noreply@[[%HTTP-HOST%]]</email>
+            <company>company</company>
+            <opening>8 a.m. - 7 p.m.</opening>
+            <variable></variable>
+		</insert>
+	</settings>
+	<panel>
+		<insert>
+			<number>panel1</number>
+			<last_modified>[[%DATE%]]</last_modified>
+            <widget><![CDATA[ Enter Content Here ]]></widget>
+		</insert>
+		<insert>
+			<number>panel2</number>
+			<last_modified>[[%DATE%]]</last_modified>
+            <widget><![CDATA[ Enter Content Here ]]></widget>
+		</insert>
+		<insert>
+			<number>panel3</number>
+			<last_modified>[[%DATE%]]</last_modified>
+            <widget><![CDATA[ Enter Content Here ]]></widget>
+		</insert>
+	</panel>
+	<user>
+		<insert>
+			<email>noreply@[[%HTTP-HOST%]]</email>
+			<username>[[%USERNAME%]]</username>
+			<password>[[%PASSWORD%]]</password>
+			<registration_date>[[%TIMESTAMP%]]</registration_date>
+			<status>admin</status>
+		</insert>
+	</user>
+	<setup>
+		<insert>
+			<set_id>1</set_id>
+			<template>Default</template>
+			<logout>0</logout>
+			<maintenance>0</maintenance>
+			<compress>0</compress>
+			<maxwidth>533</maxwidth>
+			<maxheight>400</maxheight>
+		</insert>
+	</setup>
+</database>

@@ -14,6 +14,10 @@
 namespace Framework;
 
 
+/**
+ * Class Session
+ * @package Framework
+ */
 class Session {
 
     /**
