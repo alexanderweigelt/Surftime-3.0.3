@@ -156,12 +156,12 @@ class InstallModel extends \Model\ConnectDB {
 
 	public function setSampleData( $sampleDataPath ) {
 		$data = $this->loadXMLData( $sampleDataPath );
-		if ( ! isset( $data['entries']['setEntry'][0] ) ) {
+		if ( !empty($data) and !isset( $data['entries']['setEntry'][0] ) ) {
 			$entry = $data['entries']['setEntry'];
 			unset( $data['entries']['setEntry'] );
 			$data['entries']['setEntry'][0] = $entry;
 		}
-		if ( ! isset( $data['panel']['updatePanel'][0] ) ) {
+		if ( !empty($data) and !isset( $data['panel']['updatePanel'][0] ) ) {
 			$panel = $data['panel']['updatePanel'];
 			unset( $data['panel']['updatePanel'] );
 			$data['panel']['updatePanel'][0] = $panel;
@@ -180,7 +180,7 @@ class InstallModel extends \Model\ConnectDB {
 
 	private function writeDatabaseStructure() {
 		$arrStructureDB = $this->getStructureDB();
-		if ( $arrStructureDB ) {
+		if ( !empty($arrStructureDB) ) {
 			foreach ( self::dbStrukture() as $table => $columns ) {
 				$query = 'CREATE TABLE IF NOT EXISTS ' . TBL_PRFX . $table . ' (';
 				foreach ( $columns['cols'] as $column ) {
@@ -204,10 +204,16 @@ class InstallModel extends \Model\ConnectDB {
 				}
 				$arrConstraint = [];
 				foreach ( $arrStructureDB[ $table ]['constraints'] as $key => $constraints ) {
-					if ( $key == 'primary' ) {
-						$arrConstraint['primary'] = 'PRIMARY KEY (' . $constraints . ')';
-					} elseif ( $key == 'unique' ) {
-						$arrConstraint['unique'] = 'UNIQUE KEY (' . $constraints . ')';
+					switch ($key) {
+						case 'primary':
+							$arrConstraint['primary'] = 'PRIMARY KEY (' . $constraints . ')';
+							break;
+						case 'unique':
+							$arrConstraint['unique'] = 'UNIQUE KEY (' . $constraints . ')';
+							break;
+						case 'fulltext':
+							$arrConstraint['fulltext'] = 'FULLTEXT (' . $constraints . ')';
+							break;
 					}
 				}
 				$query .= implode( ", ", $arrConstraint );
@@ -340,43 +346,44 @@ class InstallModel extends \Model\ConnectDB {
 	private function writeDatabaseSampleData() {
 		$success       = '';
 		$arrSampleData = $this->getSampleData();
-		$action        = new \Controller\ActionsController();
-		foreach ( $arrSampleData as $set => $sampleData ) {
-			switch ( $set ) {
-				case 'entries':
-					foreach ( $sampleData['setEntry'] as $request ) {
-						$request['setEntry'] = $request;
-						$action->setRequestData( $request );
-						if ( $action->getEntriesData()->getEntry( $request['page'] ) ) {
-							$success = $action->editEntry();
-						} else {
-							$success = $action->setEntry();
+		if ( !empty($arrSampleData) ) {
+			$action        = new \Controller\ActionsController();
+			foreach ( $arrSampleData as $set => $sampleData ) {
+				switch ( $set ) {
+					case 'entries':
+						foreach ( $sampleData['setEntry'] as $request ) {
+							$request['setEntry'] = $request;
+							$action->setRequestData( $request );
+							if ( $action->getEntriesData()->getEntry( $request['page'] ) ) {
+								$success = $action->editEntry();
+							} else {
+								$success = $action->setEntry();
+							}
 						}
-					}
-					break;
-				case 'settings':
-					$request['settings'] = $sampleData;
-					$action->setRequestData( $request );
-					$success = $action->saveSettings();
-					break;
-				case 'theme':
-					$request['theme'] = $sampleData;
-					$action->setRequestData( $request );
-					$success = $action->chooseTheme();
-					break;
-				case 'panel':
-					foreach ( $sampleData['updatePanel'] as $request ) {
-						$request['updatePanel'] = $request;
+						break;
+					case 'settings':
+						$request['settings'] = $sampleData;
 						$action->setRequestData( $request );
-						$success = $action->updatePanel();
-					}
-					break;
+						$success = $action->saveSettings();
+						break;
+					case 'theme':
+						$request['theme'] = $sampleData;
+						$action->setRequestData( $request );
+						$success = $action->chooseTheme();
+						break;
+					case 'panel':
+						foreach ( $sampleData['updatePanel'] as $request ) {
+							$request['updatePanel'] = $request;
+							$action->setRequestData( $request );
+							$success = $action->updatePanel();
+						}
+						break;
+				}
+			}
+			if ( $success['error'] ) {
+				return false;
 			}
 		}
-		if ( $success['error'] ) {
-			return false;
-		}
-
 		return true;
 	}
 
