@@ -7,23 +7,37 @@
  *
  * @author Alexander Weigelt <support@alexander-weigelt.de>
  * @link http://alexander-weigelt.de
- * @version Surftime CMS 3.0.3
+ * @version Surftime CMS 3.1.0
  * @license http://creativecommons.org/licenses/by-nc-nd/4.0/legalcode CC BY-NC-ND 4.0
  */
 
 namespace View;
 
 
+/**
+ * Class Menu
+ * @package View
+ */
+
 class Menu {
 
 	public $arr_nav;
 	public $pages;
 
-	public function __construct() {
+	/**
+	 * Menu constructor.
+	 */
 
+	public function __construct() {
 		$this->arr_nav = new \Controller\NavController();
 		$this->pages = $this->arr_nav->entries;
 	}
+
+	/**
+	 * @param array $class
+	 *
+	 * @return string
+	 */
 
 	public function Navigation($class = array()){
 
@@ -38,6 +52,12 @@ class Menu {
 	public function Breadcrumb(){
 
 	}
+
+	/**
+	 * @param $page
+	 *
+	 * @return string
+	 */
 
 	public function SingleLink($page){
 
@@ -64,6 +84,12 @@ class Menu {
 		$link ='<a href="'.$url.'"'.$title.'>'.$anchortxt.'</a>';
 		return $link;
 	}
+
+	/**
+	 * @param $menuArray
+	 *
+	 * @return string
+	 */
 
 	private final function buildMenu($menuArray){
 		$list = '';

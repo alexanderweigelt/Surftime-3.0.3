@@ -7,42 +7,40 @@
  *
  * @author Alexander Weigelt <support@alexander-weigelt.de>
  * @link http://alexander-weigelt.de
- * @version Surftime CMS 3.0.3
+ * @version Surftime CMS 3.1.0
  * @license http://creativecommons.org/licenses/by-nc-nd/4.0/legalcode CC BY-NC-ND 4.0
  */ 
  
- namespace View;
+namespace View;
 
-
-class Library {
-	
-	/** Eigenschaften definieren */
-	public $libraries;
 
 /**
- * Konstruktor 
- *
- * *Description* 
- * 
- * @param
- *
- * @return 
+ * Class Library
+ * @package View
  */
-	
+
+class Library {
+
+	public $libraries;
+
+	/**
+	 * Library constructor.
+	 */
+
 	public function __construct() {
 		$this->libraries = new \Controller\LibraryController();
 	}
 
-/**
- * Bibliothek jQuery laden
- *
- * *Description* Aufruf zum öffnen der Bibliothek jQuery an Controller übergeben
- * Pfad zur Datei im Template ausgeben.
- * 
- * @param 
- *
- * @return string
- */
+	/**
+	 * Bibliothek jQuery laden
+	 *
+	 * *Description* Aufruf zum öffnen der Bibliothek jQuery an Controller übergeben
+	 * Pfad zur Datei im Template ausgeben.
+	 *
+	 * @param
+	 *
+	 * @return string
+	 */
  	
 	public function jQuery(){
 		$jQuery = '';
@@ -56,16 +54,16 @@ class Library {
 		return $jQuery;
 	}
 	
-/**
- * Bibliothek jQueryUI laden
- *
- * *Description* Aufruf zum öffnen der Bibliothek jQueryUI an Controller übergeben
- * Pfad zur Datei im Template <head> ausgeben.
- * 
- * @param 
- *
- * @return string
- */
+	/**
+	 * Bibliothek jQueryUI laden
+	 *
+	 * *Description* Aufruf zum öffnen der Bibliothek jQueryUI an Controller übergeben
+	 * Pfad zur Datei im Template <head> ausgeben.
+	 *
+	 * @param
+	 *
+	 * @return string
+	 */
  	
 	public function jQueryUI(){
 		$jQueryUI = '';
@@ -88,16 +86,16 @@ class Library {
 		return $jQueryUI;
 	}	
 
-/**
- * Bibliothek Normalize laden
- *
- * *Description* Aufruf zum öffnen der Bibliothek Normalize CSS an Controller übergeben
- * Pfad zur Datei im Template <head> ausgeben.
- * 
- * @param 
- *
- * @return string
- */
+	/**
+	 * Bibliothek Normalize laden
+	 *
+	 * *Description* Aufruf zum öffnen der Bibliothek Normalize CSS an Controller übergeben
+	 * Pfad zur Datei im Template <head> ausgeben.
+	 *
+	 * @param
+	 *
+	 * @return string
+	 */
  	
 	public function Normalize(){
 		$Normalize = '';
@@ -111,16 +109,16 @@ class Library {
 		return $Normalize;
 	}	
 
-/**
- * Bibliothek Modernizr laden
- *
- * *Description* Aufruf zum öffnen der Bibliothek Modernizr an Controller übergeben
- * Pfad zur Datei im Template <head> ausgeben.
- * 
- * @param 
- *
- * @return string
- */
+	/**
+	 * Bibliothek Modernizr laden
+	 *
+	 * *Description* Aufruf zum öffnen der Bibliothek Modernizr an Controller übergeben
+	 * Pfad zur Datei im Template <head> ausgeben.
+	 *
+	 * @param
+	 *
+	 * @return string
+	 */
  	
 	public function Modernizr(){
 		$Modernizr = '';
@@ -134,16 +132,16 @@ class Library {
 		return $Modernizr;
 	}
 	
-/**
- * Bibliothek Foundation CSS laden
- *
- * *Description* Aufruf zum öffnen der Bibliothek Foundation an Controller übergeben
- * Pfad zur Datei im Template <head> ausgeben.
- * 
- * @param 
- *
- * @return string
- */
+	/**
+	 * Bibliothek Foundation CSS laden
+	 *
+	 * *Description* Aufruf zum öffnen der Bibliothek Foundation an Controller übergeben
+	 * Pfad zur Datei im Template <head> ausgeben.
+	 *
+	 * @param
+	 *
+	 * @return string
+	 */
  	
 	public function Foundation(){
 		$Foundation = '';
@@ -167,16 +165,16 @@ class Library {
 		return $Foundation;
 	}	
 	
-/**
- * Bibliothek Foundation Javascript laden
- *
- * *Description* Aufruf zum öffnen der Bibliothek Foundation Javascript an Controller übergeben
- * Pfad zur Datei im Template vor dem schließenden <body> ausgeben.
- * 
- * @param 
- *
- * @return string
- */
+	/**
+	 * Bibliothek Foundation Javascript laden
+	 *
+	 * *Description* Aufruf zum öffnen der Bibliothek Foundation Javascript an Controller übergeben
+	 * Pfad zur Datei im Template vor dem schließenden <body> ausgeben.
+	 *
+	 * @param
+	 *
+	 * @return string
+	 */
  	
 	public function FoundationJS(){
 		$FoundationJS = '';
@@ -192,16 +190,16 @@ class Library {
 		return $FoundationJS;
 	}	
 
-/**
- * Bibliothek Lightbox laden
- *
- * *Description* Aufruf zum öffnen der Bibliothek Lightbox an Controller übergeben
- * Pfad zur Datei im Template <head> ausgeben.
- * 
- * @param 
- *
- * @return string
- */
+	/**
+	 * Bibliothek Lightbox laden
+	 *
+	 * *Description* Aufruf zum öffnen der Bibliothek Lightbox an Controller übergeben
+	 * Pfad zur Datei im Template <head> ausgeben.
+	 *
+	 * @param
+	 *
+	 * @return string
+	 */
  	
 	public function Lightbox(){
 		$Lightbox = '';

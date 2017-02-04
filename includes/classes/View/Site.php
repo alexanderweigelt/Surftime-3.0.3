@@ -7,34 +7,62 @@
  *
  * @author Alexander Weigelt <support@alexander-weigelt.de>
  * @link http://alexander-weigelt.de
- * @version Surftime CMS 3.0.3
+ * @version Surftime CMS 3.1.0
  * @license http://creativecommons.org/licenses/by-nc-nd/4.0/legalcode CC BY-NC-ND 4.0
  */ 
  
- namespace View;
+namespace View;
 
+
+/**
+ * Class Site
+ * @package View
+ */
 
 class Site {
 	
     private $data;
     public $compress;
 
-    public function __construct(){
-        $this->data = array();
+	/**
+	 * Site constructor.
+	 */
+
+	public function __construct(){
+        $this->data = [];
     }
 
-    public function __set($name, $value){
+	/**
+	 * @param $name
+	 * @param $value
+	 */
+
+	public function __set($name, $value){
         $this->data[$name] = $value;
     }
 
-    public function __get($name){
+	/**
+	 * @param $name
+	 *
+	 * @return mixed
+	 * @throws \Framework\Exception
+	 */
+
+	public function __get($name){
         if (isset($this->data[$name])) {
             return $this->data[$name];
         } else {
             throw new \Framework\Exception("Can't get property $name!");
         }
     }
-	
+
+	/**
+	 * @param $name
+	 * @param $arguments
+	 *
+	 * @return mixed
+	 */
+
 	public function __call($name, $arguments){
 		$arr_allowed = array(
 			'Menu' => array(
@@ -49,8 +77,14 @@ class Site {
 		$call = new \Framework\Caller();
 		return $call->callingMethod($name, $arguments, $arr_allowed);
 	}
-	
-    public function parse($file){
+
+	/**
+	 * @param $file
+	 *
+	 * @return mixed|string
+	 */
+
+	public function parse($file){
         $output = '';
         if($file){
             ob_start();

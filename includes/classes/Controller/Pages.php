@@ -7,16 +7,21 @@
  *
  * @author Alexander Weigelt <support@alexander-weigelt.de>
  * @link http://alexander-weigelt.de
- * @version Surftime CMS 3.0.3
+ * @version Surftime CMS 3.1.0
  * @license http://creativecommons.org/licenses/by-nc-nd/4.0/legalcode CC BY-NC-ND 4.0
  */ 
  
- namespace Controller;
- 
+namespace Controller;
+
+
+/**
+ * Class Pages
+ * @package Controller
+ */
 
 class Pages {
 	
-	/** Eigenschaften definieren */
+	/** Properties */
 	public $response;
     public $page;
 	public $site;
@@ -29,17 +34,12 @@ class Pages {
 	public $searchRequest;
 	public $searchform;
 
+
 	/**
-	 * Konstruktor
-	 *
-	 * *Description*
-	 *
-	 * @param
-	 *
-	 * @return void
+	 * Pages constructor.
 	 */
- 
-    public function __construct() {		
+
+	public function __construct() {
 		$this->request = array_merge($_GET, $_POST);
 		$this->response = new \Framework\Response();
 		$this->response->errorReporting();
@@ -51,7 +51,7 @@ class Pages {
     }
 	
 	/**
-	 * Lade Methoden
+	 * Load methods
 	 *
 	 * *Description*
 	 *
@@ -63,7 +63,18 @@ class Pages {
  	public function run(){
 		$display = 'nothing to see ...';
 		$maintenance = false;
-		$methods = array('checkInstall', 'compression', 'loadPlugin', 'realURL', 'maintenance', 'loadAction', 'sendAllHeaders', 'setTemplate', 'setValues', 'display');
+		$methods = [
+			'checkInstall',
+			'compression',
+			'loadPlugin',
+			'realURL',
+			'maintenance',
+			'loadAction',
+			'sendAllHeaders',
+			'setTemplate',
+			'setValues',
+			'display'
+		];
 		foreach($methods as $method){
 			$$method = $this->$method();
 		}

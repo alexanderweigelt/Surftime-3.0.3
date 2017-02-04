@@ -7,22 +7,39 @@
  *
  * @author Alexander Weigelt <support@alexander-weigelt.de>
  * @link http://alexander-weigelt.de
- * @version Surftime CMS 3.0.3
+ * @version Surftime CMS 3.1.0
  * @license http://creativecommons.org/licenses/by-nc-nd/4.0/legalcode CC BY-NC-ND 4.0
  */
  
- namespace View; 
+namespace View;
 
+
+/**
+ * Class XML
+ * @package View
+ */
 
 class XML {
 	
 	public $xmlHeader;
-	
+
+	/**
+	 * XML constructor.
+	 *
+	 * @param $charset
+	 */
+
 	public function __construct($charset) {
 		//XML Header ausgeben
     	$this->xmlHeader = '<?xml version="1.0" encoding="'.$charset.'" ?>';	
 	}
-	
+
+	/**
+	 * @param $pages
+	 *
+	 * @return string
+	 */
+
 	public function sitemap($pages){
 		$sitemap = $this->xmlHeader;
 		$sitemap.= "
@@ -48,7 +65,13 @@ class XML {
 		
 		return $sitemap;
 	}
-	
+
+	/**
+	 * @param string $msg
+	 *
+	 * @return string
+	 */
+
 	public function defaultXML($msg = ''){
 		$xmlcont = $this->xmlHeader."\n";
 		//Fehlermeldung ausgeben

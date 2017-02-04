@@ -7,7 +7,7 @@
  *
  * @author Alexander Weigelt <support@alexander-weigelt.de>
  * @link http://alexander-weigelt.de
- * @version Surftime CMS 3.0.3
+ * @version Surftime CMS 3.1.0
  * @license http://creativecommons.org/licenses/by-nc-nd/4.0/legalcode CC BY-NC-ND 4.0
  */
 
@@ -26,7 +26,7 @@ class InstallModel extends \Model\ConnectDB {
 	const DEFAULT_PASS = 'webmaster';
 	const DEFAULT_USER = 'webmaster';
 
-	/** Eigenschaften definieren */
+	/** Properties */
 	private $contentDB;
 	private $structureDB;
 	private $sampleData;
@@ -255,7 +255,10 @@ class InstallModel extends \Model\ConnectDB {
 				/* create query and execute array */
 				foreach ( $columns['cols'] as $column ) {
 					$i = 0;
-					if ( empty( $arrContent[ $table ]["insert"][ $column ] ) and is_array( $arrContent[ $table ]["insert"] ) ) {
+					if (
+						empty( $arrContent[ $table ]["insert"][ $column ] ) and
+						is_array( $arrContent[ $table ]["insert"] )
+					) {
 						foreach ( $arrContent[ $table ]["insert"] as $insert ) {
 							if ( isset( $insert[ $column ] ) ) {
 								if ( ! empty( $insert[ $column ] ) ) {

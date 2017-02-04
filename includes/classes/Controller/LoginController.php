@@ -1,75 +1,77 @@
 <?php
-    
+
  /**
  * Login Controller
  *
- * *Description* 
+ * *Description*
  *
  * @author Alexander Weigelt <support@alexander-weigelt.de>
  * @link http://alexander-weigelt.de
- * @version Surftime CMS 3.0.3
+ * @version Surftime CMS 3.1.0
  * @license http://creativecommons.org/licenses/by-nc-nd/4.0/legalcode CC BY-NC-ND 4.0
- */ 
- 
- namespace Controller;
- 
+ */
 
-class LoginController {
-	
+ namespace Controller;
+
+
+ /**
+  * Class LoginController
+  * @package Controller
+  */
+
+ class LoginController {
+
 	/** Eigenschaften definieren */
-	public $loginData = array();
+	public $loginData = [];
 	private $entries;
     private $maxLifetime;
 
-/**
- * Konstruktor 
- *
- * *Description* 
- * 
- * @param
- *
- * @return 
- */
- 
+	/**
+	 * Constructor
+	 *
+	 * *Description*
+	 */
+
     public function __construct() {
 		$this->entries = new \Model\GetContent();
 		$this->loginData['classFormLogin'] = '';
-		
-		// Neue Session starten
+
+		// Start new session
         $this->maxLifetime = 3600 * 24 * 7;
 		$this->Session = new \Framework\Session('LOGIN');
 	}
-	
-/**
- * Einloggen
- *
- * *Description* 
- * 
- * @param
- *
- * @return 
- */
- 
+
+	/**
+	 * Log in
+	 *
+	 * *Description*
+	 *
+	 * @param
+	 *
+	 * @return
+	 */
+
 	public function SetLogin() {
 		$this->SetDurationLogin();
 		if(isset($_POST['loginSubmit'])){
-		
+
 			foreach($_POST as $k => $v){
 				$$k = trim(strip_tags($v));
 			}
 			if(empty($loginUser) or empty($loginPass)){
 				$this->loginData['classFormLogin'] = 'error';
 			}
-			else{	
-				// Daten aus Datenbank für Admin auslesen
+			else{
+				// Get admin data
 				$login = $this->entries->getUserData($loginUser);
-		
-				if($login['password'] === crypt($loginPass, $login['password'])){
+
+				/** @var TYPE_NAME $loginPass */
+				if( $login['password'] === crypt($loginPass, $login['password'])){
 					$this->Session->writeSession('auth', true);
                     $this->Session->writeSession('password', $login['passowrd']);
                     // set up user roles and permissions
                     $this->Session->writeSession('role', $login['status']);
-					
+
 					header('Location: '.DIR.'?tab=1');
 					exit();
 				}
@@ -80,17 +82,17 @@ class LoginController {
 			}
 		}
 	}
-	
-/**
- * Login Status checken
- *
- * *Description* 
- * 
- * @param
- *
- * @return boolean
- */
- 
+
+	/**
+	 * Check status
+	 *
+	 * *Description*
+	 *
+	 * @param
+	 *
+	 * @return boolean
+	 */
+
 	public function CheckLogin() {
 		$login = FALSE;
         $auth = $this->Session->readSession('auth');
@@ -99,17 +101,17 @@ class LoginController {
 		}
 		return $login;
 	}
-	
-/**
- * Ausloggen 
- *
- * *Description* 
- * 
- * @param
- *
- * @return 
- */
- 
+
+	/**
+	 * Log out
+	 *
+	 * *Description*
+	 *
+	 * @param
+	 *
+	 * @return
+	 */
+
 	public function Logout(){
 		$this->Session->destroySession();
 		header('LOCATION: '.DIR);

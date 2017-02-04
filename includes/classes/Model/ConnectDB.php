@@ -7,33 +7,37 @@
  *
  * @author Alexander Weigelt <support@alexander-weigelt.de>
  * @link http://alexander-weigelt.de
- * @version Surftime CMS 3.0.3
+ * @version Surftime CMS 3.1.0
  * @license http://creativecommons.org/licenses/by-nc-nd/4.0/legalcode CC BY-NC-ND 4.0
  */ 
  
- namespace Model;
- 
+namespace Model;
+
+
+/**
+ * Class ConnectDB
+ * @package Model
+ */
 
 class ConnectDB {
 	
-/** Eigenschaften definieren */
-	
+	/** Properties */
 	public static $charset;
 	
-/**
- * Datenbankverbindung herstellen
- *
- * *Description* Methode ohne instanziieren der Klasse aufrufen
- * 
- * @param
- *
- * @return object 
- */
+	/**
+	 * Connect database
+	 *
+	 * *Description* Methode ohne instanziieren der Klasse aufrufen
+	 *
+	 * @param
+	 *
+	 * @return object
+	 */
  
  	public static function connect(){
 		
 		self::setMySQLCharset();
-		//Aufbau der Datenbankverbindung
+
 		try {
 			$db = new \PDO('mysql:host='.DB_HOST.self::setMySQLPort().';dbname='.DB_NAME, DB_USER, DB_PASS,
 				array(
@@ -52,45 +56,45 @@ class ConnectDB {
 			 
 	}
 	
-/**
- * Zeichensatz DB setzen
- *
- * *Description* Globalen Zeichensatz verwenden
- * 
- * @param
- *
- * @return string 
- */
+	/**
+	 * Set database charset
+	 *
+	 * *Description* Globalen Zeichensatz verwenden
+	 *
+	 * @param
+	 *
+	 * @return string
+	 */
  
  	private static function setMySQLCharset(){
 		self::$charset = \Framework\Utility::getCharset(1);
 	}
 
 	
-/**
- * MySQL Port setzen
- *
- * *Description* Port bei Angabe Konstante DB_PORT setzen
- * 
- * @param
- *
- * @return string 
- */
+	/**
+	 * Set mysql port
+	 *
+	 * *Description* Port bei Angabe Konstante DB_PORT setzen
+	 *
+	 * @param
+	 *
+	 * @return string
+	 */
  
  	private static function setMySQLPort(){
 		$port = defined('DB_PORT') ? ';port='.DB_PORT : '';
 		return $port;
 	}
 		
-/**
- * Datenbankstruktur abbilden
- *
- * *Description* 
- * 
- * @param string
- *
- * @return array 
- */
+	/**
+	 * Set database structure
+	 *
+	 * *Description*
+	 *
+	 * @param string
+	 *
+	 * @return array
+	 */
  
 	public function dbStrukture($select = NULL){
 	

@@ -7,56 +7,148 @@
  *
  * @author Alexander Weigelt <support@alexander-weigelt.de>
  * @link http://alexander-weigelt.de
- * @version Surftime CMS 3.0.3
+ * @version Surftime CMS 3.1.0
  * @license http://creativecommons.org/licenses/by-nc-nd/4.0/legalcode CC BY-NC-ND 4.0
   */
 
- namespace Controller;
+namespace Controller;
 
 
- /**
-  * Class ValidationActionsController
-  * @package Controller
-  */
- class ValidationActionsController {
+/**
+ * Class ValidationActionsController
+ * @package Controller
+ */
 
-	/** Eigenschaften definieren */
-	 private $required_fields = [];
-	 private $fixed_part = [];
-	 private $panels = [];
-	public $request;
-	public $entries;
+class ValidationActionsController {
 
-	 /**
-	  * Constructor
-	  *
-	  * *Description*
-	  */
+	/** Properties */
+	private $required_fields;
+	private $fixed_part;
+	private $panels;
+	private $request;
+	private $entries;
 
-	public function __construct() {
-		//Pflichtfelder Eintrag Seiten definieren
-		$this->required_fields = array(
-			'site' => array('title','page','headline','indexation'),
-			'navigation' => array('anchor'),
-			'user' => array('email','username','status'),
-			'settings' => array('firstname','lastname','street','postalzip','city','phone','email','company','opening','variable'),
-			'setup' => array('logout', 'maintenance', 'cache', 'maxwidth', 'maxheight')
-		);
+	/**
+	 * Required fields Define entry pages
+	 *
+	 * @param array $required_fields
+	 *
+	 */
 
-		// Fixe Systemseiten definieren, bei denen nur der Inhalt geändert werden kann.
-		// Sie sind nicht löschbar und auch der Pagename kann nicht geändert werden.
-		$this->fixed_part = array('index', 'imprint', 'contact', 'search', 'error');
+	public function setRequiredFields( $required_fields = [] ) {
+		if( empty($required_fields) ){
+			$this->required_fields = [
+				'site' => [
+					'title','page','headline','indexation'
+				],
+				'navigation' => [
+					'anchor'
+				],
+				'user' => [
+					'email','username','status'
+				],
+				'settings' => [
+					'firstname','lastname','street','postalzip','city','phone','email','company','opening','variable'
+				],
+				'setup' => [
+					'logout', 'maintenance', 'cache', 'maxwidth', 'maxheight'
+				]
+			];
+		}
+		else{
+			$this->required_fields = $required_fields;
+		}
+	}
 
-		// Lege mögliche Panel für den Eintrag fest
-		$this->panels = array('panel1', 'panel2', 'panel3');
+	/**
+	 * Returns an array with required fields
+	 *
+	 * @param string $table
+	 *
+	 * @return mixed
+	 */
+
+	public function getRequiredFields( $table = '' ){
+		// Fallback if empty var $this->required_fields
+		if( empty($this->required_fields) ){
+			$this->setRequiredFields();
+		}
+		if( !empty($this->required_fields[$table]) ){
+			return $this->required_fields[$table];
+		}
+		return $this->required_fields;
+	}
+
+
+	/**
+	 * Define fixed parts
+	 *
+	 * *Description* Define fixed system pages where only the content can be changed.
+	 * They are not erasable and the page name can not be changed.
+	 *
+	 * @param array $fixed_part
+	 */
+
+	public function setFixedPart( $fixed_part = [] ) {
+		if( !empty($fixed_part) ){
+			$this->fixed_part = $fixed_part;
+		}
+		else{
+			$this->fixed_part = [ 'index', 'imprint', 'contact', 'search', 'error' ];
+		}
+	}
+
+	/**
+	 * Returns an array with defined fixed system pages
+	 *
+	 * @return array
+	 */
+
+	public function getFixedPart(){
+		if( empty($this->fixed_part) ){
+			$this->setFixedPart();
+		}
+		return $this->fixed_part;
+	}
+
+	/**
+	 * Specify possible panels for the entry
+	 *
+	 * @param array $panels
+	 */
+
+	public function setPanels( $panels = [] ) {
+		$this->panels = [ 'panel1', 'panel2', 'panel3' ];
+		if( !empty($panels) and is_array($panels) ){
+			$this->panels = array_merge( $this->panels, $panels);
+		}
+	}
+
+	/**
+	 * Returns an array with allowed panels
+	 *
+	 * @return array
+	 */
+
+	public function getPanels(){
+		if( empty($this->panels) ){
+			$this->setPanels();
+		}
+		return $this->panels;
 	}
 
 	 /**
 	  * Set a instance from Model GetContent
 	  */
 
-	 public function setEntriesData() {
-		 $this->entries = new \Model\GetContent();
+	 public function setEntriesData( $object = NULL ) {
+		 if( is_object($object) ){
+			 $this->entries = $object;
+		 }
+		 else{
+			 $this->entries = new \Model\GetContent();
+		 }
+
 	 }
 
 	 /**
@@ -90,15 +182,20 @@
 	 /**
 	  * Returns the data from request
 	  *
+	  * @param null $key
+	  *
 	  * @return mixed
 	  */
 
-	 public function getRequestData() {
+	 public function getRequestData( $key = NULL ) {
+		 if( isset($key) ){
+			 return $this->request[$key];
+		 }
 		 return $this->request;
 	 }
 
 	 /**
-	  * Formular Eintrag Seite validieren
+	  * Validate form entry page
 	  *
 	  * *Description*
 	  *
@@ -109,24 +206,24 @@
 
 	public function validFormEntry($request){
 
-		// Formular Pages validieren
+		// Validate form pages
 		$requiredSite = false;
 		$requiredNav  = false;
 		if(is_array($request)){
-			//Pflichtfelder prüfen
-			foreach($this->required_fields['site'] as $key){
+			// Check required fields
+			foreach($this->getRequiredFields('site') as $key){
 				if(!empty($request[$key])){
 					$requiredSite = TRUE;
 				}
 				else{
-					//Pflichtfeld nicht ausgefüllt - Abbruch
+					// Don't fill out required fields - then break
 					$requiredSite = FALSE;
 					break;
 				}
 			}
 			// wenn Eintrag Menü gesetzt, dann ebenfalls Pflichtfelder prüfen
 			if(!empty($request['menu-enable']) and $request['menu-enable'] == 'on'){
-				foreach($this->required_fields['navigation'] as $key){
+				foreach($this->getRequiredFields('navigation') as $key){
 					if(!empty($request[$key])){
 						$requiredNav = TRUE;
 					}
@@ -144,22 +241,35 @@
 			// sind alle Pflichtfelder ausgefüllt...
 			if($requiredSite and $requiredNav){
 				// Datenbankabfrage ob gesendete Page bereits existiert
-				$entry = $this->getEntriesData()->getEntry( $this->request['page'] );
+				$entry = $this->getEntriesData()->getEntry( $this->getRequestData('page') );
 				// Umwandeln in zugelassene Dateinmaen
 				$request['page'] = \Controller\Helpers::buildLinkName($request['page']);
 				// Prüfe ob eine ID mitgesendet wurde und diese auch mit der ID des Datensatz aus DB übereinstimmt
-				if(!empty($request['id']) and $entry['id'] == $request['id'] and !$this->checkFixedPages($this->request['page'])){
+				if(
+					!empty($request['id']) and $entry['id'] == $request['id'] and
+					!$this->checkFixedPages($this->getRequestData('page'))
+				){
 					$request['page'] = $entry['page'];
 				}
 				// HTML Entities kodieren
 				foreach($request as $key => $value){
-					if($key == 'title' or $key == 'headline' or $key == 'anchor' or $key == 'description' or $key == 'keywords'){
-						$request[ $key ] = ! empty( $request[ $key ] ) ? htmlentities( strip_tags( trim( $value ) ), ENT_QUOTES, \Framework\Utility::getCharset() ) : '';
+					if(
+						$key == 'title' or
+					    $key == 'headline' or
+					    $key == 'anchor' or
+					    $key == 'description' or
+					    $key == 'keywords'
+					){
+						if ( ! empty( $request[ $key ] ) ) {
+							$request[ $key ] = htmlentities( strip_tags( trim( $value ) ), ENT_QUOTES, \Framework\Utility::getCharset() );
+						} else {
+							$request[ $key ] = '';
+						}
 					}
 				}
 			}
 			else{
-				return array();
+				return [];
 			}
 		}
 
@@ -167,7 +277,7 @@
 	}
 
 	 /**
-	  * Pruefe auf einzigartigen Page-Name
+	  * Check for unique page name
 	  *
 	  * *Description*
 	  *
@@ -204,7 +314,7 @@
 	  */
 
 	public function checkFixedPages($page){
-		if(in_array($page, $this->fixed_part)){
+		if(in_array($page, $this->getFixedPart())){
 			return FALSE;
 		}
 		else{
@@ -223,7 +333,7 @@
 	  */
 
 	public function validPanel($panel){
-		if(in_array($panel['number'], $this->panels) and isset($panel['widget'])){
+		if(in_array($panel['number'], $this->getPanels()) and isset($panel['widget'])){
 			return TRUE;
 		}
 		else{
@@ -246,7 +356,7 @@
         // fehlerbehandlung bilder
         $imagesize = false;
         $imagetyp = false;
-		$whitelist = array('jpg','png','gif'); //zugelassene Dateiendungen
+		$whitelist = [ 'jpg','png','gif' ]; //zugelassene Dateiendungen
 
         if(is_array($files))
         {
@@ -321,7 +431,7 @@
 	public function validVarsSetting($request){
 
 		$settings = $this->getEntriesData()->getSiteSettings();
-		foreach($this->required_fields['settings'] as $key){
+		foreach($this->getRequiredFields('settings') as $key){
 			if(!array_key_exists($key, $request)){
 				$request[$key] = $settings[$key];
 			}
@@ -329,7 +439,11 @@
 		// HTML Entities kodieren
 		foreach($request as $key => $value){
 			if($key != 'email'){
-				$request[$key] = !empty($request[$key]) ? htmlentities(strip_tags($value), ENT_QUOTES, \Framework\Utility::getCharset()) : '';
+				if ( ! empty( $request[ $key ] ) ) {
+					$request[ $key ] = htmlentities( strip_tags( $value ), ENT_QUOTES, \Framework\Utility::getCharset() );
+				} else {
+					$request[ $key ] = '';
+				}
 			}
 		}
 		return $request;
@@ -350,7 +464,7 @@
 		$minSize = 180;
 		// Formular Setup validieren
 		if(is_array($request)) {
-			foreach($this->required_fields['setup'] as $key){
+			foreach($this->getRequiredFields('setup') as $key){
 				if(!array_key_exists($key, $request)){
 					$request[$key] = 0;
 				}
@@ -358,7 +472,7 @@
 					if($key == 'maxwidth' or $key == 'maxheight'){
 						$request[$key] = intval($request[$key], 10);
 						if($request[$key] > $maxSize or $request[$key] < $minSize){
-							$request = array();
+							$request = [];
 							break;
 						}
 					}
@@ -368,7 +482,7 @@
 			return $request;
 		}
 		else{
-			return array();
+			return [];
 		}
 	}
 
@@ -377,16 +491,17 @@
 	  *
 	  * *Description*
 	  *
-	  * @param string
+	  * @param array
 	  *
 	  * @return boolean
 	  */
 
-	public function validFormUser($request){
+	public function validFormUser( $request ){
 
+		$required = FALSE;
 		//Pflichtfelder User
 		if(is_array($request)){
-			foreach($this->required_fields['user'] as $key){
+			foreach($this->getRequiredFields('user') as $key){
 				if(!empty($request[$key])){
 					$required = TRUE;
 				}
@@ -425,7 +540,7 @@
 	public function checkUniqueUsername($userName){
 		// Prüfe auf einmaligen Nutzername
 		$unique = TRUE;
-		if ( ! empty( $this->request['user'] ) and $userName != $this->request['user'] ) {
+		if ( ! empty( $this->getRequestData('user') ) and $userName != $this->getRequestData('user') ) {
 			foreach ( $this->getEntriesData()->getAllUsers() as $user ) {
 				if($user['username'] == $userName){
 					$unique = FALSE;
@@ -449,18 +564,20 @@
 	public function checkLastAdmin(){
 		// Prüfe ob noch mindestens ein Administrator existiert
 		$admin = 0;
+		$setUser = $this->getRequestData('setUser');
 		foreach ( $this->getEntriesData()->getAllUsers() as $user ) {
 			if($user['status'] == 'admin'){
 				++$admin;
 			}
 		}
-		if($admin > 1 or ($admin >= 1 and !empty($this->request['setUser']['status']) and $this->request['setUser']['status'] == 'admin')){
+		if($admin > 1 or ($admin >= 1 and !empty($setUser['status']) and $setUser['status'] == 'admin')){
 			return TRUE;
 		}
 		else{
 			return FALSE;
 		}
 	}
+
 }
 
 ?>

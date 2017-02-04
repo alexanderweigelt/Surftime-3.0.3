@@ -7,25 +7,24 @@
  *
  * @author Alexander Weigelt <support@alexander-weigelt.de>
  * @link http://alexander-weigelt.de
- * @version Surftime CMS 3.0.3
+ * @version Surftime CMS 3.1.0
  * @license http://creativecommons.org/licenses/by-nc-nd/4.0/legalcode CC BY-NC-ND 4.0
  */ 
  
- namespace Controller;
- 
+namespace Controller;
+
+
+/**
+ * Class XMLController
+ * @package Controller
+ */
 
 class XMLController {
-	
-/**
- * Konstruktor 
- *
- * *Description* 
- * 
- * @param
- *
- * @return header
- */
- 
+
+	/**
+	 * XMLController constructor.
+	 */
+
 	public function __construct() {
 		$this->request = array_merge($_GET, $_POST);
 		$this->response = new \Framework\Response();
@@ -34,15 +33,15 @@ class XMLController {
 		$this->entries = new \Model\GetContent();
 	}
 	
-/**
- * Ausgaben in XML-Datei erzeugen
- *
- * *Description* 
- * 
- * @param
- *
- * @return  
- */
+	/**
+	 * Ausgaben in XML-Datei erzeugen
+	 *
+	 * *Description*
+	 *
+	 * @param
+	 *
+	 * @return string
+	 */
  
 	public function display(){
 		// Modify Header Information
@@ -79,7 +78,11 @@ class XMLController {
 		$this->response->sendHeaders();
 		return $xml;	
 	}
-	
+
+	/**
+	 * @return string
+	 */
+
 	public function loadExtension(){
 		$xml = '';
 		if(!empty($this->request['extension']) and file_exists(DIR_PLUGIN.$this->request['extension'].'/xml.php')){

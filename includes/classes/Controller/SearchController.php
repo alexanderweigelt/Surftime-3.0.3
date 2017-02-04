@@ -7,40 +7,39 @@
  *
  * @author Alexander Weigelt <support@alexander-weigelt.de>
  * @link http://alexander-weigelt.de
- * @version Surftime CMS 3.0.3
+ * @version Surftime CMS 3.1.0
  * @license http://creativecommons.org/licenses/by-nc-nd/4.0/legalcode CC BY-NC-ND 4.0
  */ 
  
- namespace Controller;
- 
+namespace Controller;
+
+
+/**
+ * Class SearchController
+ * @package Controller
+ */
 
 class SearchController {
 
 	public $response;
-	
-/**
- * Konstruktor 
- *
- * *Description* 
- * 
- * @param
- *
- * @return 
- */
- 
+
+	/**
+	 * SearchController constructor.
+	 */
+
 	public function __construct(){
 		$this->result = new \Model\SearchModel();
 	}
 
-/**
- * Volltextsuche ausfuehren 
- *
- * *Description* 
- * 
- * @param $term string, $page string
- *
- * @return string
- */
+	/**
+	 * Volltextsuche ausfuehren
+	 *
+	 * *Description*
+	 *
+	 * @param $term string, $page string
+	 *
+	 * @return string
+	 */
  
 	public function startSearch($term = NULL, $page){
 		if(!empty($term)){

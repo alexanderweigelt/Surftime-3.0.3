@@ -7,12 +7,17 @@
  *
  * @author Alexander Weigelt <support@alexander-weigelt.de>
  * @link http://alexander-weigelt.de
- * @version Surftime CMS 3.0.3
+ * @version Surftime CMS 3.1.0
  * @license http://creativecommons.org/licenses/by-nc-nd/4.0/legalcode CC BY-NC-ND 4.0
  */ 
  
- namespace Model;
- 
+namespace Model;
+
+
+/**
+ * Class ImageModel
+ * @package Model
+ */
 
 class ImageModel {
 	
@@ -24,36 +29,31 @@ class ImageModel {
 	const MAX_HEIGHT_BIG = 400;
 	const MAX_WIDTH_BIG = 533;
 	
-	/** Eigenschaften definieren */
+	/** Properties */
 	private $format_x;
 	private $format_y;
 	public $settings;
-	
-/**
- * Konstruktor 
- *
- * *Description* 
- * 
- * @param 
- *
- * @return 
- */
- 
+
+
+	/**
+	 * ImageModel constructor.
+	 */
+
 	public function __construct() {
 		$format = explode('x', self::FORMAT);
 		$this->format_x = trim($format[0]);
 		$this->format_y = trim($format[1]);
 	}
 	
-/**
- * Bilder bearbeiten und speichern
- *
- * *Description* 
- * 
- * @param string, string, string
- *
- * @return boolean
- */
+	/**
+	 * Bilder bearbeiten und speichern
+	 *
+	 * *Description*
+	 *
+	 * @param string, string, string
+	 *
+	 * @return boolean
+	 */
  
 	public function createImage($path_tmp, $img_name, $type = 'big'){
 		
@@ -124,29 +124,29 @@ class ImageModel {
 			}
 			
 			
-/*
-******************************************
-* $dst_image ist Resource des Zielbildes.
-*
-* $src_image ist Resource des Quellbildes.
-*
-* $dst_x ist x-coordinate vom Anfangspunkt.
-*
-* $dst_y ist y-coordinate vom Anfangspunkt. 
-*
-* $src_x ist x-coordinate vom Anfangspunkt. 
-*
-* $src_y ist y-coordinate vom Anfangspunkt.
-*
-* $dst_w ist Ziel breite.
-*
-* $dst_h ist Ziel höhe.
-*
-* $src_w ist Breite der Quelle.
-*
-* $src_h ist Höhe der Quelle.
-******************************************
-*/
+			/*
+			******************************************
+			* $dst_image ist Resource des Zielbildes.
+			*
+			* $src_image ist Resource des Quellbildes.
+			*
+			* $dst_x ist x-coordinate vom Anfangspunkt.
+			*
+			* $dst_y ist y-coordinate vom Anfangspunkt.
+			*
+			* $src_x ist x-coordinate vom Anfangspunkt.
+			*
+			* $src_y ist y-coordinate vom Anfangspunkt.
+			*
+			* $dst_w ist Ziel breite.
+			*
+			* $dst_h ist Ziel höhe.
+			*
+			* $src_w ist Breite der Quelle.
+			*
+			* $src_h ist Höhe der Quelle.
+			******************************************
+			*/
 			//Strings aus Array der berechneten Koordinaten
 			foreach($this->calcSize($src_w, $src_h, $dst_w, $dst_h) as $key => $value){
 				$key = trim($key);
@@ -185,16 +185,16 @@ class ImageModel {
 		}
 		return $createimage;
 	}
-	
-/**
- * Bildergroesse berechnen
- *
- * *Description* 
- * 
- * @param int, int, int, int
- *
- * @return array
- */
+
+	/**
+	 * Bildergroesse berechnen
+	 *
+	 * *Description*
+	 *
+	 * @param int, int, int, int
+	 *
+	 * @return array
+	 */
  
 	private function calcSize($src_w, $src_h, $dst_w, $dst_h){
 		
@@ -231,15 +231,15 @@ class ImageModel {
 		return $coords;		
 	}
 	
-/**
- * Bilder entfernen/loeschen
- *
- * *Description* 
- * 
- * @param string
- *
- * @return 
- */
+	/**
+	 * Bilder entfernen/loeschen
+	 *
+	 * *Description*
+	 *
+	 * @param string
+	 *
+	 * @return
+	 */
  
 	public function removeImage($path){
 		if(file_exists($path)){
@@ -247,15 +247,15 @@ class ImageModel {
 		}
 	}
 
-/**
- * Transparente PNG
- *
- * *Description* Setzt die Transparaez beim Resize von PNG und GIF Images
- * 
- * @param string
- *
- * @return 
- */
+	/**
+	 * Transparente PNG
+	 *
+	 * *Description* Setzt die Transparaez beim Resize von PNG und GIF Images
+	 *
+	 * @param string
+	 *
+	 * @return
+	 */
  	
 	public function setTransparency($new_image, $image_source) { 
         

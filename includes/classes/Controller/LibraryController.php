@@ -7,44 +7,43 @@
  *
  * @author Alexander Weigelt <support@alexander-weigelt.de>
  * @link http://alexander-weigelt.de
- * @version Surftime CMS 3.0.3
+ * @version Surftime CMS 3.1.0
  * @license http://creativecommons.org/licenses/by-nc-nd/4.0/legalcode CC BY-NC-ND 4.0
  */ 
  
- namespace Controller;
-  
-  
-class LibraryController {
-	
-	/** Eigenschaften definieren */
-	public $get_libraries;
+namespace Controller;
+
 
 /**
- * Konstruktor 
- *
- * *Description* 
- * 
- * @param
- *
- * @return 
+ * Class LibraryController
+ * @package Controller
  */
+
+class LibraryController {
 	
+	/** Properties */
+	public $get_libraries;
+
+	/**
+	 * LibraryController constructor.
+	 */
+
 	public function __construct() {
 		$this->get_libraries = new \Model\LibraryModel();
 	}
 
-/**
- * Bibliotheken aufrufen
- *
- * *Description* Status der jeweiligen Bibliotheken an superglobale Varaible übergeben.
- * Pfad der gewählten Bibliothek zurück geben.
- * 
- * @param array | string
- *
- * @return array
- */	
+	/**
+	 * Bibliotheken aufrufen
+	 *
+	 * *Description* Status der jeweiligen Bibliotheken an superglobale Varaible übergeben.
+	 * Pfad der gewählten Bibliothek zurück geben.
+	 *
+	 * @param array | string
+	 *
+	 * @return array
+	 */
 	
-	public function addLibrary($call = array()){
+	public function addLibrary($call = [] ){
 		
 		$path = '';
 		
@@ -53,11 +52,19 @@ class LibraryController {
 			$arr_libraries = $call;
 		}
 		else{
-			$arr_libraries = array($call);
+			$arr_libraries = [ $call ];
 		}
 		if(!empty($arr_libraries)){
-			$globArrLibrary = \Controller\Helpers::getGlobals('Library') ? \Controller\Helpers::getGlobals('Library') : array();
-			if(!empty($globArrLibrary) and is_array($globArrLibrary) and !(in_array($arr_libraries, $globArrLibrary))){
+			if ( \Controller\Helpers::getGlobals( 'Library' ) ) {
+				$globArrLibrary = \Controller\Helpers::getGlobals( 'Library' );
+			} else {
+				$globArrLibrary = [];
+			}
+			if(
+				!empty($globArrLibrary) and
+			   is_array($globArrLibrary) and
+			   !(in_array($arr_libraries, $globArrLibrary))
+			){
 				\Controller\Helpers::setGlobals('Library', array_merge($arr_libraries, $globArrLibrary));
 			}
 			elseif(!empty($globArrLibrary) and is_array($globArrLibrary)){

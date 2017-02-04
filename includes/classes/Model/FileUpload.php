@@ -7,37 +7,39 @@
  *
  * @author Alexander Weigelt <support@alexander-weigelt.de>
  * @link http://alexander-weigelt.de
- * @version Surftime CMS 3.0.3
+ * @version Surftime CMS 3.1.0
  * @license http://creativecommons.org/licenses/by-nc-nd/4.0/legalcode CC BY-NC-ND 4.0
  */ 
  
- namespace Model;
+namespace Model;
 
+
+/**
+ * Class FileUpload
+ * @package Model
+ */
 
 class FileUpload {
 	
 	/** Settings Whitelist; zugelassene Dateiendungen */
-	private $whitelist = array('jpg','png','gif','txt','csv','pdf');
+	private $whitelist = [ 'jpg','png','gif','txt','csv','pdf' ];
 	
-	/** Eigenschaften definieren */
+	/** Properties */
 	public $code;
 	public $success;
-	private $files = array();
+	private $files = [];
 	public $destination_path;
-	
-/**
- * Konstruktor 
- *
- * *Description* Temporaeres Verzeichnis fuer Upload erstellen
- * 
- * @param string
- *
- * @return 
- */
- 
+
+
+	/**
+	 * FileUpload constructor.
+	 *
+	 * @param string $path
+	 */
+
 	public function __construct($path = ''){
 		$this->code = substr(strtoupper(md5(microtime())), 0, 20);
-		$this->success = array('error' => false, 'message' => '', 'dirname' => $this->code);
+		$this->success = [ 'error' => false, 'message' => '', 'dirname' => $this->code ];
 		
 		//Zielverzeichnis erstellen
 		$this->destination_path = $path.$this->code;
@@ -53,58 +55,58 @@ class FileUpload {
 		}
 	}
 	
-/**
- * Upload validieren 
- *
- * *Description* 
- * 
- * @param array
- *
- * @return array
- */
+	/**
+	 * Upload validieren
+	 *
+	 * *Description*
+	 *
+	 * @param array
+	 *
+	 * @return array
+	 */
  
-	public function getFile($upload = array()){
+	public function getFile($upload = [] ){
+		$files[0] = [
+			'source' => '',
+			'extension' => '',
+			'filename' => ''
+		];
+
 		if(!empty($upload) and is_array($upload)){
 			$i = 0;		
 			foreach($upload as $value){	
 				if(array_key_exists('error', $value) and !$value['error']){
 					$path_parts = pathinfo($value['name']);
 					$num = $i + 1;
-					$files[$i] = array(
+					$files[$i] = [
 						'source' => $value['tmp_name'],
 						'extension' => $path_parts['extension'],
 						'filename' => 'FILE_'.sprintf("%02d",$num)
-					);
+					];
 				}
 				else{
-					$files[$i] = array(
+					$files[$i] = [
 						'source' => '',
 						'extension' => '',
 						'filename' => ''
-					);
+					];
 				}
 				$i++;
 			}
 		}
-		else{
-			$files[0] = array(
-				'source' => '',
-				'extension' => '',
-				'filename' => ''
-			);	
-		}
+
 		return $files;		
 	}
 
-/**
- * Eigentlicher Upload
- *
- * *Description* 
- * 
- * @param array
- *
- * @return array
- */
+	/**
+	 * Eigentlicher Upload
+	 *
+	 * *Description*
+	 *
+	 * @param array
+	 *
+	 * @return array
+	 */
  
 	public function upload($data = null){
 		

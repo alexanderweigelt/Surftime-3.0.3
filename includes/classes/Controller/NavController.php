@@ -7,45 +7,44 @@
  *
  * @author Alexander Weigelt <support@alexander-weigelt.de>
  * @link http://alexander-weigelt.de
- * @version Surftime CMS 3.0.3
+ * @version Surftime CMS 3.1.0
  * @license http://creativecommons.org/licenses/by-nc-nd/4.0/legalcode CC BY-NC-ND 4.0
  */ 
  
- namespace Controller;
- 
+namespace Controller;
+
+
+/**
+ * Class NavController
+ * @package Controller
+ */
 
 class NavController {
 	
 	public $entries = array();
-	
-/**
- * Konstruktor 
- *
- * *Description* 
- * 
- * @param
- *
- * @return 
- */
- 
+
+	/**
+	 * NavController constructor.
+	 */
+
 	public function __construct() {
 		$this->entries = new \Model\GetContent();
 	}
 	
-/**
- * Array Navigation aus Daten DB bilden 
- *
- * *Description* 
- * 
- * @param
- *
- * @return array
- */
+	/**
+	 * Array Navigation aus Daten DB bilden
+	 *
+	 * *Description*
+	 *
+	 * @param
+	 *
+	 * @return array
+	 */
  
 	public function arrNavigation(){
 		
-		$nav = array();
-		$arr_unset = array();
+		$nav = [];
+		$arr_unset = [];
 		$entries = $this->entries->getNavigation();
 		
 		//Alle vorkommenden Kinderelemente suchen und in Array schreiben
@@ -74,7 +73,15 @@ class NavController {
 		
 		return $nav;
 	}
-	
+
+	/**
+	 * Check if the page exists
+	 *
+	 * @param $site
+	 *
+	 * @return bool
+	 */
+
 	public function checkSite($site){
 		
 		$is_site = FALSE;

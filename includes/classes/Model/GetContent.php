@@ -7,42 +7,42 @@
  *
  * @author Alexander Weigelt <support@alexander-weigelt.de>
  * @link http://alexander-weigelt.de
- * @version Surftime CMS 3.0.3
+ * @version Surftime CMS 3.1.0
  * @license http://creativecommons.org/licenses/by-nc-nd/4.0/legalcode CC BY-NC-ND 4.0
  */ 
  
- namespace Model;
+namespace Model;
 
+
+/**
+ * Class GetContent
+ * @package Model
+ */
 
 class GetContent extends \Model\ConnectDB {
 	
-	/** Eigenschaften definieren */
+	/** Properties */
 	public $db;
 	public $entries = array();
-	
-/**
- * Konstruktor 
- *
- * *Description* 
- * 
- * @param string
- *
- * @return 
- */
- 
+
+
+	/**
+	 * GetContent constructor.
+	 */
+
 	public function __construct(){
 		$this->db = parent::connect();
 	}
 	
-/**
- * Datenbank pruefen
- *
- * *Description* Pruefe bei Systemstart ob alle notwendigen Tabellen und Spalten angelegt sind 
- * 
- * @param string
- *
- * @return array
- */
+	/**
+	 * Datenbank pruefen
+	 *
+	 * *Description* Pruefe bei Systemstart ob alle notwendigen Tabellen und Spalten angelegt sind
+	 *
+	 * @param string
+	 *
+	 * @return array
+	 */
  
 	public function checkDB($setting = 'complete'){
 		
@@ -89,15 +89,15 @@ class GetContent extends \Model\ConnectDB {
 		return $missing;
 	}
 	
-/**
- * Eintrag Seite holen
- *
- * *Description* Einzelne Seite aus Tabelle site DB holen
- * 
- * @param string
- *
- * @return array
- */
+	/**
+	 * Eintrag Seite holen
+	 *
+	 * *Description* Einzelne Seite aus Tabelle site DB holen
+	 *
+	 * @param string
+	 *
+	 * @return array
+	 */
  
 	public function getEntry($page){
 		$sql_request = "SELECT * FROM ".TBL_PRFX."site s LEFT JOIN ".TBL_PRFX."meta m ON m.page_id = s.id LEFT JOIN ".TBL_PRFX."navigation n ON m.page_id = n.site_id WHERE s.page = :page";
@@ -114,15 +114,15 @@ class GetContent extends \Model\ConnectDB {
 		}
 	}
 	
-/**
- * Alle Eintraege von Seiten holen
- *
- * *Description* Alle Seiten aus Tabelle site DB holen
- * 
- * @param 
- *
- * @return array
- */
+	/**
+	 * Alle Eintraege von Seiten holen
+	 *
+	 * *Description* Alle Seiten aus Tabelle site DB holen
+	 *
+	 * @param
+	 *
+	 * @return array
+	 */
  
 	public function getEntries(){
 		$sql_request = "SELECT * FROM ".TBL_PRFX."site s LEFT JOIN ".TBL_PRFX."meta m ON m.page_id = s.id";
@@ -136,15 +136,15 @@ class GetContent extends \Model\ConnectDB {
 		}
 	}
 
-/**
- * Daten Panel holen
- *
- * *Description* Einzelne (3) Panel aus Tabelle panel DB holen
- * 
- * @param 
- *
- * @return array
- */
+	/**
+	 * Daten Panel holen
+	 *
+	 * *Description* Einzelne (3) Panel aus Tabelle panel DB holen
+	 *
+	 * @param
+	 *
+	 * @return array
+	 */
 	
 	public function getPanel(){
 		$sql_request = "SELECT number, last_modified, widget FROM ".TBL_PRFX."panel";
@@ -160,15 +160,15 @@ class GetContent extends \Model\ConnectDB {
 		}
 	}
 	
-/**
- * Daten Benutzer holen
- *
- * *Description* Einzelne Benutzerdaten aus Tabelle user DB holen
- * 
- * @param string
- *
- * @return array
- */
+	/**
+	 * Daten Benutzer holen
+	 *
+	 * *Description* Einzelne Benutzerdaten aus Tabelle user DB holen
+	 *
+	 * @param string
+	 *
+	 * @return array
+	 */
  
 	public function getUserData($username = ''){
 		
@@ -188,15 +188,15 @@ class GetContent extends \Model\ConnectDB {
 		}
 	}
 	
-/**
- * Alle Eintraege von Benutzern holen
- *
- * *Description* Alle Benutzer aus Tabelle user DB holen
- * 
- * @param 
- *
- * @return array
- */
+	/**
+	 * Alle Eintraege von Benutzern holen
+	 *
+	 * *Description* Alle Benutzer aus Tabelle user DB holen
+	 *
+	 * @param
+	 *
+	 * @return array
+	 */
  
 	public function getAllUsers(){
 		$sql_request = "SELECT id, email, username, registration_date, status FROM ".TBL_PRFX."user";
@@ -212,15 +212,15 @@ class GetContent extends \Model\ConnectDB {
 		}
 	}
 	
-/**
- * Variablen auslesen
- *
- * *Description* Alle Variablen aus Tabelle settings DB holen
- * 
- * @param 
- *
- * @return array
- */
+	/**
+	 * Variablen auslesen
+	 *
+	 * *Description* Alle Variablen aus Tabelle settings DB holen
+	 *
+	 * @param
+	 *
+	 * @return array
+	 */
  
 	public function getSiteSettings(){
 		$sql_request = "SELECT * FROM ".TBL_PRFX."settings WHERE var_id = 1";
@@ -234,15 +234,15 @@ class GetContent extends \Model\ConnectDB {
 		}	
 	}
 	
-/**
- * Navigation auslesen
- *
- * *Description* Alle Daten der Navigaton aus Tabellen site und navigation DB holen
- * 
- * @param 
- *
- * @return array
- */
+	/**
+	 * Navigation auslesen
+	 *
+	 * *Description* Alle Daten der Navigaton aus Tabellen site und navigation DB holen
+	 *
+	 * @param
+	 *
+	 * @return array
+	 */
  
 	public function getNavigation(){
 		$sql_request = "SELECT parent, anchor, page, site_id, title, sorting FROM ".TBL_PRFX."site s LEFT JOIN ".TBL_PRFX."navigation n ON n.site_id = s.id LEFT JOIN ".TBL_PRFX."meta m ON s.id = m.page_id ORDER BY n.sorting";
@@ -279,15 +279,15 @@ class GetContent extends \Model\ConnectDB {
 		}
 	}
 	
-/**
- * Spalten einer Tabelle auslesen
- *
- * *Description* 
- * 
- * @param string
- *
- * @return array
- */
+	/**
+	 * Spalten einer Tabelle auslesen
+	 *
+	 * *Description*
+	 *
+	 * @param string
+	 *
+	 * @return array
+	 */
  
 	private function getColumns($tablename) {
 		$columns = array();
@@ -304,15 +304,15 @@ class GetContent extends \Model\ConnectDB {
 		return $columns;
 	}
 	
-/**
- * ENUM und SET lesen
- *
- * *Description* Holt ENUM und SET Felder aus einer Tabelle
- * 
- * @param string, string
- *
- * @return array
- */
+	/**
+	 * ENUM und SET lesen
+	 *
+	 * *Description* Holt ENUM und SET Felder aus einer Tabelle
+	 *
+	 * @param string, string
+	 *
+	 * @return array
+	 */
  
 	public function getDBEnumSet($db_tbl,$db_field) {
 		
@@ -342,15 +342,15 @@ class GetContent extends \Model\ConnectDB {
 		return $arr_values;
 	}
 	
-/**
- * Bilder einlesen
- *
- * *Description* Hole alle Bilder aus den Ordner Thumb und Big und schreibe Pfade in Array
- * 
- * @param string, string
- *
- * @return array
- */
+	/**
+	 * Bilder einlesen
+	 *
+	 * *Description* Hole alle Bilder aus den Ordner Thumb und Big und schreibe Pfade in Array
+	 *
+	 * @param string, string
+	 *
+	 * @return array
+	 */
  
 	public function getAllImages(){
 
@@ -366,16 +366,16 @@ class GetContent extends \Model\ConnectDB {
 		}	
 		return $allImages;
 	}
-	
-/**
- * Templates einlesen
- *
- * *Description* Lese alle vorhandenen Templates aus und validiere diese
- * 
- * @param 
- *
- * @return array
- */
+
+	/**
+	 * Templates einlesen
+	 *
+	 * *Description* Lese alle vorhandenen Templates aus und validiere diese
+	 *
+	 * @param
+	 *
+	 * @return array
+	 */
  
 	public function getAllTemplates(){
 	
@@ -402,15 +402,15 @@ class GetContent extends \Model\ConnectDB {
 		return $allTemplates;
 	}
 	
-/**
- * Rechte eines Benutzer feststellen
- *
- * *Description* Lese aus der Session die gesetzten Rechte eines eingeloggten Benutzers
- * 
- * @param 
- *
- * @return string or boolean
- */
+	/**
+	 * Rechte eines Benutzer feststellen
+	 *
+	 * *Description* Lese aus der Session die gesetzten Rechte eines eingeloggten Benutzers
+	 *
+	 * @param
+	 *
+	 * @return string or boolean
+	 */
  
 	public function getRole(){
 		
@@ -418,15 +418,15 @@ class GetContent extends \Model\ConnectDB {
 		return $role;	
 	}
 	
-/**
- * Systeminformationen
- *
- * *Description* Lese Infos vom System aus hinterlegter XML-Datei
- * 
- * @param 
- *
- * @return array
- */
+	/**
+	 * Systeminformationen
+	 *
+	 * *Description* Lese Infos vom System aus hinterlegter XML-Datei
+	 *
+	 * @param
+	 *
+	 * @return array
+	 */
  
 	public function readSystemInfos(){
 		

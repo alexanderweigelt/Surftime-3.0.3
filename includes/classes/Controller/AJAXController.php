@@ -7,29 +7,28 @@
  *
  * @author Alexander Weigelt <support@alexander-weigelt.de>
  * @link http://alexander-weigelt.de
- * @version Surftime CMS 3.0.3
+ * @version Surftime CMS 3.1.0
  * @license http://creativecommons.org/licenses/by-nc-nd/4.0/legalcode CC BY-NC-ND 4.0
  */ 
  
- namespace Controller;
- 
+namespace Controller;
+
+
+/**
+ * Class AJAXController
+ * @package Controller
+ */
 
 class AJAXController {
 	
-	/** Eigenschaften definieren */
+	/** Properties */
 	public $entries;
 	public $ajax;
-	
-/**
- * Konstruktor 
- *
- * *Description* 
- * 
- * @param
- *
- * @return 
- */
- 
+
+	/**
+	 * AJAXController constructor.
+	 */
+
 	public function __construct() {
 		$this->request = array_merge($_GET, $_POST);
 		$this->response = new \Framework\Response();
@@ -37,15 +36,15 @@ class AJAXController {
 		$this->entries = new \Model\GetContent();
 	}
 	
-/**
- * Ausgaben AJAX Daten erzeugen
- *
- * *Description* 
- * 
- * @param
- *
- * @return 
- */
+	/**
+	 * Ausgaben AJAX Daten erzeugen
+	 *
+	 * *Description*
+	 *
+	 * @param
+	 *
+	 * @return
+	 */
  
 	public function display() {
 		
@@ -80,18 +79,18 @@ class AJAXController {
 		return $ajx;
 	}
 	
-/**
- * Daten laden
- *
- * *Description* 
- * 
- * @param string
- *
- * @return array 
- */
+	/**
+	 * Daten laden
+	 *
+	 * *Description*
+	 *
+	 * @param string
+	 *
+	 * @return array
+	 */
  
 	private function loadData($param){
-		$data = array();
+		$data = [];
 		switch ($param) {
 			
 			case 'image_list':
@@ -109,14 +108,21 @@ class AJAXController {
 			case 'link_list':
 				$i = 0;
 				foreach($this->entries->getNavigation() as $navigation){
-					$data[$i]['title'] = !empty($navigation['anchor']) ? $navigation['anchor'] : ucfirst(str_replace('-', ' ', $navigation['page']));
+					if ( ! empty( $navigation['anchor'] ) ) {
+						$data[ $i ]['title'] = $navigation['anchor'];
+					} else {
+						$data[ $i ]['title'] = ucfirst( str_replace( '-', ' ', $navigation['page'] ) );
+					}
 					$data[$i]['value'] = \Controller\Helpers::buildLink($navigation['page']);
 					$i++;
 				}
 				break;	
 				
 			case 'plugin':
-				if(!empty($this->request['extension']) and file_exists(DIR_PLUGIN.$this->request['extension'].'/ajax.php')){
+				if(
+					!empty($this->request['extension']) and
+					file_exists(DIR_PLUGIN.$this->request['extension'].'/ajax.php')
+				){
 					include_once(DIR_PLUGIN.$this->request['extension'].'/ajax.php');
 					if(function_exists('AjaxData')){
 						//Funktion in Plugin aufrufen GET-Parameter als Array übergeben
@@ -124,13 +130,13 @@ class AJAXController {
 						$data = AjaxData($this->request);
 					}
 					else{
-						$data = array('No data found for '.$this->request['extension']);
+						$data = [ 'No data found for ' . $this->request['extension'] ];
 					}
 				}
 				break;
 				
 			default:
-				$data = array('Sorry! Nothing found.');
+				$data = [ 'Sorry! Nothing found.' ];
 		}
 		
 		return $data;

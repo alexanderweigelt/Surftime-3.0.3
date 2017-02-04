@@ -7,56 +7,55 @@
  *
  * @author Alexander Weigelt <support@alexander-weigelt.de>
  * @link http://alexander-weigelt.de
- * @version Surftime CMS 3.0.3
+ * @version Surftime CMS 3.1.0
  * @license http://creativecommons.org/licenses/by-nc-nd/4.0/legalcode CC BY-NC-ND 4.0
  */ 
  
- namespace Controller;
- 
+namespace Controller;
+
+
+/**
+ * Class ContactFormController
+ * @package Controller
+ */
 
 class ContactFormController {
 	
-	/** Eigenschaften definieren */
+	/** Properties */
 	public $userdata;
 	public $entries;
     public $email;
-	public $data = array(
+	public $data = [
 		'adress' => '',
 		'name' => '',
 		'content' => '',
 		'subject' => ''
-	);
-    public $error = array(
+	];
+    public $error = [
 		'<p class="success">Daten gesendet</p>',
 		'<p class="error">Fehler beim Senden!</p>',
         '<p class="error">Pflichtangaben fehlen!</p>'
-	);
-	
-/**
- * Konstruktor 
- *
- * *Description* 
- * 
- * @param
- *
- * @return 
- */
- 
+    ];
+
+	/**
+	 * ContactFormController constructor.
+	 */
+
 	public function __construct(){
 		$this->entries = new \Model\GetContent();
 		$this->userdata = $this->entries->getSiteSettings();
         $this->fm = new \Model\FormModel();
 	}
 	
-/**
- * Kontakt-Formular Controller
- *
- * *Description* 
- * 
- * @param array
- *
- * @return array
- */
+	/**
+	 * Kontakt-Formular Controller
+	 *
+	 * *Description*
+	 *
+	 * @param array
+	 *
+	 * @return array
+	 */
  
 	public function sendMessage($request){
 	
@@ -80,15 +79,15 @@ class ContactFormController {
         }	
 	}
 	
-/**
- * Kontakt-Formular validieren
- *
- * *Description* 
- * 
- * @param array
- *
- * @return array
- */
+	/**
+	 * Kontakt-Formular validieren
+	 *
+	 * *Description*
+	 *
+	 * @param array
+	 *
+	 * @return array
+	 */
  
 	public function validFormContact($param){
 		// clean send Data
@@ -107,15 +106,15 @@ class ContactFormController {
 		
 	}	
 	
-/**
- * Inhalt der Nachricht kompilieren
- *
- * *Description* 
- * 
- * @param array, string
- *
- * @return string
- */
+	/**
+	 * Inhalt der Nachricht kompilieren
+	 *
+	 * *Description*
+	 *
+	 * @param array, string
+	 *
+	 * @return string
+	 */
  
 	private function CompileMessage($values, $tplFile){
 	

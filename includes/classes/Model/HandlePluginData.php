@@ -7,45 +7,44 @@
  *
  * @author Alexander Weigelt <support@alexander-weigelt.de>
  * @link http://alexander-weigelt.de
- * @version Surftime CMS 3.0.3
+ * @version Surftime CMS 3.1.0
  * @license http://creativecommons.org/licenses/by-nc-nd/4.0/legalcode CC BY-NC-ND 4.0
  */ 
  
- namespace Model;
- 
+namespace Model;
+
+
+/**
+ * Class HandlePluginData
+ * @package Model
+ */
 
 class HandlePluginData {
 	
-	/** Eigenschaften definieren */
+	/** Properties */
 	public $entries;
-	
-/**
- * Konstruktor 
- *
- * *Description* 
- * 
- * @param string
- *
- * @return 
- */
- 
+
+	/**
+	 * HandlePluginData constructor.
+	 */
+
 	public function __construct(){
 		$this->entries = new \Model\GetContent();
 	}
+
+	/**
+	 * Plugin MySQL SELECT ausfuehren
+	 *
+	 * *Description* simpler mysql-select
+	 *
+	 * @param string , array, array
+	 *
+	 * @return array|bool
+	 */
 	
-/**
- * Plugin MySQL SELECT ausfuehren
- *
- * *Description* simpler mysql-select
- * 
- * @param string, array, array
- *
- * @return array
- */
-	
-	public function selectDB($table, $exec = array(), $select = array()){
+	public function selectDB($table, $exec = [], $select = [] ){
 		
-		$arrExec = array();
+		$arrExec = [];
 		if(!empty($select)){
 			$selected = implode(',', $select);
 		}
@@ -92,18 +91,18 @@ class HandlePluginData {
 			return FALSE;
 		}		
 	}
+
+	/**
+	 * Plugin MySQL UPDATE execute
+	 *
+	 * *Description* simple mysql update
+	 *
+	 * @param string , array, array
+	 *
+	 * @return bool
+	 */
 	
-/**
- * Plugin MySQL UPDATE ausfuehren
- *
- * *Description* simple mysql update
- * 
- * @param string, array, array
- *
- * @return boolean
- */
-	
-	public function updateDB($table, $exec = array(), $where = array()){
+	public function updateDB($table, $exec = [], $where = [] ){
 		
 		//With no WHERE clause, all rows are updated.
 		if(!empty($where)){
@@ -129,7 +128,7 @@ class HandlePluginData {
 		else{
 			$set = '';
 		}
-		$arrExec = array_merge($arrSet, $arrWhere);
+		$arrExec = array_merge( $arrWhere, $arrSet );
 		
 		$sql = "UPDATE ".TBL_PRFX.preg_replace('/[^a-zA-Z0-9_]/','',$table)." ".$set.$clause; 
 		$stmt = $this->entries->db->prepare($sql);
@@ -141,15 +140,15 @@ class HandlePluginData {
 		}	
 	}
 	
-/**
- * Plugin MySQL INSERT ausfuehren
- *
- * *Description* simpler mysql-insert
- * 
- * @param string, array
- *
- * @return boolean
- */
+	/**
+	 * Plugin MySQL INSERT execute
+	 *
+	 * *Description* simpler mysql-insert
+	 *
+	 * @param string, array
+	 *
+	 * @return boolean
+	 */
  
 	public function insertDB($table, $exec = array()){
 		
@@ -178,15 +177,15 @@ class HandlePluginData {
 		}
 	}
 	
-/**
- * Plugin MySQL DELETE Table ausfuehren
- *
- * *Description* Eintrag aus Tabelle loeschen
- * 
- * @param string, array
- *
- * @return boolean
- */
+	/**
+	 * Plugin MySQL DELETE Table execute
+	 *
+	 * *Description* Delete entry from database
+	 *
+	 * @param string, array
+	 *
+	 * @return boolean
+	 */
  
 	public function deleteDB($table, $where = array()){
 		
@@ -213,15 +212,15 @@ class HandlePluginData {
 		}
 	}
 	
-/**
- * Plugin MySQL Tabelle erstellen
- *
- * *Description* simpler mysql-select
- * 
- * @param string, array
- *
- * @return boolean
- */
+	/**
+	 * Create MySQL tables
+	 *
+	 * *Description* simpler mysql-select
+	 *
+	 * @param string, array
+	 *
+	 * @return boolean
+	 */
  
 	public function createDB($table, $column_definition = array()){
 		
@@ -267,15 +266,15 @@ class HandlePluginData {
 		}
 	}
 	
-/**
- * Plugin MySQL Query ausfuehren
- *
- * *Description* universelle Schnittstelle fuer alle Arten von MySQL-Query
- * 
- * @param string, array
- *
- * @return array or boolean
- */
+	/**
+	 * Plugin MySQL Query execute
+	 *
+	 * *Description* universelle Schnittstelle fuer alle Arten von MySQL-Query
+	 *
+	 * @param string, array
+	 *
+	 * @return boolean
+	 */
  
 	public function queryDB($sql = NULL, $arrExec = array()){
 		if(!empty($sql)){

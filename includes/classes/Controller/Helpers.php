@@ -7,24 +7,29 @@
  *
  * @author Alexander Weigelt <support@alexander-weigelt.de>
  * @link http://alexander-weigelt.de
- * @version Surftime CMS 3.0.3
+ * @version Surftime CMS 3.1.0
  * @license http://creativecommons.org/licenses/by-nc-nd/4.0/legalcode CC BY-NC-ND 4.0
  */ 
  
- namespace Controller;
- 
+namespace Controller;
+
+
+/**
+ * Class Helpers
+ * @package Controller
+ */
 
 class Helpers {
 	
-/**
- * Eingaben bereinigen
- *
- * *Description* Schutz vor XSS Attacken, MySQL-Injection
- * 
- * @param array
- *
- * @return array
- */ 
+	/**
+	 * Eingaben bereinigen
+	 *
+	 * *Description* Schutz vor XSS Attacken, MySQL-Injection
+	 *
+	 * @param mixed $value
+	 *
+	 * @return array
+	 */
  
   	public static function Clean($value) {
     
@@ -54,15 +59,15 @@ class Helpers {
 	return $value;
   	}
 		
-/**
- * Konvertieren Bytes in Bit
- *
- * *Description* 
- * 
- * @param string
- *
- * @return int
- */
+	/**
+	 * Konvertieren Bytes in Bit
+	 *
+	 * *Description*
+	 *
+	 * @param string
+	 *
+	 * @return int
+	 */
  
 	public static function convertBytes($value) {
         if (is_numeric($value)){
@@ -86,15 +91,15 @@ class Helpers {
         }
     }
 	
-/**
- * Maximale groesse Upload ermitteln
- *
- * *Description* 
- * 
- * @param int
- *
- * @return int
- */
+	/**
+	 * Maximale groesse Upload ermitteln
+	 *
+	 * *Description*
+	 *
+	 * @param int
+	 *
+	 * @return int
+	 */
  
     public static function maxSize($number = null){
         $max_size = self::convertBytes(ini_get('upload_max_filesize'));
@@ -104,15 +109,15 @@ class Helpers {
         return $max_size;
     }
 		
-/**
- * Korrekten Pfad bilden
- *
- * *Description* 
- * 
- * @param string
- *
- * @return string
- */
+	/**
+	 * Korrekten Pfad bilden
+	 *
+	 * *Description*
+	 *
+	 * @param string
+	 *
+	 * @return string
+	 */
  
 	public static function buildLink($page){
 		
@@ -126,15 +131,15 @@ class Helpers {
 		return $link;
 	}
 		
-/**
- * Korrekte URI Host bilden
- *
- * *Description* 
- * 
- * @param 
- *
- * @return string
- */
+	/**
+	 * Korrekte URI Host bilden
+	 *
+	 * *Description*
+	 *
+	 * @param
+	 *
+	 * @return string
+	 */
  
 	public static function getHost(){
     
@@ -150,15 +155,15 @@ class Helpers {
 		return $url;    
 	}
 		
-/**
- * Dateinamen bilden
- *
- * *Description* 
- * 
- * @param string
- *
- * @return string
- */
+	/**
+	 * Dateinamen bilden
+	 *
+	 * *Description*
+	 *
+	 * @param string
+	 *
+	 * @return string
+	 */
  
 	public static function buildLinkName($text = '') {
 		
@@ -182,15 +187,15 @@ class Helpers {
         return $text;
 	}
 		
-/**
- * Pager 
- *
- * *Description* 
- * 
- * @param array, string, int
- *
- * @return array
- */
+	/**
+	 * Pager
+	 *
+	 * *Description*
+	 *
+	 * @param array, string, int
+	 *
+	 * @return array
+	 */
  
 	public static function paganation($input, $page, $limit){
 		
@@ -221,15 +226,15 @@ class Helpers {
 		return $output;
 	}
 		
-/**
- * Datumsformat umwandeln
- *
- * *Description* 
- * 
- * @param string
- *
- * @return string
- */
+	/**
+	 * Datumsformat umwandeln
+	 *
+	 * *Description*
+	 *
+	 * @param string
+	 *
+	 * @return string
+	 */
  
 	public static function dateMySQL2German($date) {
 		// datumsausgabe date datenbank
@@ -237,31 +242,31 @@ class Helpers {
 		return    sprintf("%02d.%02d.%04d", $d[2], $d[1], $d[0]);
 	}
 		
-/**
- * Datumsformat umwandeln
- *
- * *Description* 
- * 
- * @param string
- *
- * @return string
- */
+	/**
+	 * Datumsformat umwandeln
+	 *
+	 * *Description*
+	 *
+	 * @param string
+	 *
+	 * @return string
+	 */
  
 	public static function timestampMySQL2German($date){
         setlocale (LC_TIME, "de_DE");
         $timestamp = strtotime($date);
         return  strftime("%a, %d %b %Y %H:%M:%S",$timestamp);
 	}
-		
-/**
- * E-mail checker
- *
- * *Description* 
- * 
- * @param string
- *
- * @return boolean
- */
+
+	/**
+	 * E-mail checker
+	 *
+	 * *Description*
+	 *
+	 * @param string
+	 *
+	 * @return boolean
+	 */
 
 	public static function checkEmail($strEmail) {
 			// is mail is not set, return false
@@ -279,15 +284,15 @@ class Helpers {
 			return true;
 	}
 		
-/**
- * Pfad zu Wurzelverzeichnis
- *
- * *Description* 
- * 
- * @param 
- *
- * @return string
- */
+	/**
+	 * Pfad zu Wurzelverzeichnis
+	 *
+	 * *Description*
+	 *
+	 * @param
+	 *
+	 * @return string
+	 */
  
 	public static function pathToRoot() {
 		$tmp = dirname($_SERVER['PHP_SELF']);
@@ -310,29 +315,29 @@ class Helpers {
 		return $relpath;
 	}
 
-/**
- * Globale Variable setzen
- *
- * *Description* Setzt eine globale Variable
- * 
- * @param string, string
- *
- * @return string
- */
+	/**
+	 * Globale Variable setzen
+	 *
+	 * *Description* Setzt eine globale Variable
+	 *
+	 * @param string, string
+	 *
+	 * @return string
+	 */
  	
 	static public function setGlobals($name, $value){
         $GLOBALS[$name] = $value;
     }
 
-/**
- * Globale Variable auslesen
- *
- * *Description* Liest eine globale Variable aus und gibt im Fehlerfall false zurück.
- * 
- * @param string
- *
- * @return string, array, boolean
- */
+	/**
+	 * Globale Variable auslesen
+	 *
+	 * *Description* Liest eine globale Variable aus und gibt im Fehlerfall false zurück.
+	 *
+	 * @param string
+	 *
+	 * @return string, array, boolean
+	 */
  
     static public function getGlobals($name){
 		if(!empty($GLOBALS[$name])){
@@ -343,15 +348,16 @@ class Helpers {
 		}
     }
 
-/**
- * Passwort verschlüsseln
- *
- * *Description* Gibt einen Hash-String zurück, der unter Verwendung des DES-basierenden Unix-Standard-Hashingalgorithmus oder einem anderen auf ihrem System verfügbaren Algorithmus erstellt wurde. 
- * 
- * @param string
- *
- * @return string, boolean
- */	
+	/**
+	 * Passwort verschlüsseln
+	 *
+	 * *Description* Gibt einen Hash-String zurück, der unter Verwendung des DES-basierenden
+	 * Unix-Standard-Hashingalgorithmus oder einem anderen auf ihrem System verfügbaren Algorithmus erstellt wurde.
+	 *
+	 * @param string
+	 *
+	 * @return string, boolean
+	 */
 	
 	static public function encryptPassword($password = NULL){
 		if(!empty($password) and is_string($password)){

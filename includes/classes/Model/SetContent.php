@@ -7,38 +7,37 @@
  *
  * @author Alexander Weigelt <support@alexander-weigelt.de>
  * @link http://alexander-weigelt.de
- * @version Surftime CMS 3.0.3
+ * @version Surftime CMS 3.1.0
  * @license http://creativecommons.org/licenses/by-nc-nd/4.0/legalcode CC BY-NC-ND 4.0
  */ 
  
- namespace Model;
- 
+namespace Model;
+
+
+/**
+ * Class SetContent
+ * @package Model
+ */
 
 class SetContent extends \Model\ConnectDB {
-	
-/**
- * Konstruktor 
- *
- * *Description* 
- * 
- * @param
- *
- * @return 
- */
- 
+
+	/**
+	 * SetContent constructor.
+	 */
+
 	public function __construct(){
 		$this->db = parent::connect();
 	}
 	
-/**
- * neuer Eintrag
- *
- * *Description* 
- * 
- * @param array
- *
- * @return boolean
- */
+	/**
+	 * Set a new entry
+	 *
+	 * *Description*
+	 *
+	 * @param array
+	 *
+	 * @return boolean
+	 */
  
 	public function insertEntry($request){
 		//SQL-Anweisungen
@@ -97,15 +96,15 @@ class SetContent extends \Model\ConnectDB {
 		}
 	}
 	
-/**
- * Eintrag aendern
- *
- * *Description* 
- * 
- * @param array
- *
- * @return boolean
- */
+	/**
+	 * Change entry
+	 *
+	 * *Description*
+	 *
+	 * @param array
+	 *
+	 * @return boolean
+	 */
  
 	public function updateEntry($request){
 		
@@ -179,15 +178,15 @@ class SetContent extends \Model\ConnectDB {
 		}
 	}
 	
-/**
- * Eintrag entfernen
- *
- * *Description* 
- * 
- * @param string
- *
- * @return boolean
- */
+	/**
+	 * Remove entry
+	 *
+	 * *Description*
+	 *
+	 * @param string
+	 *
+	 * @return boolean
+	 */
  
 	public function deleteEntry($page){
 		// ID des Eintrag holen
@@ -229,15 +228,15 @@ class SetContent extends \Model\ConnectDB {
 
 	}
 
-/**
- * Aktualisierung der Inhalte vom Panel in DB
- *
- * *Description* 
- * 
- * @param array, string
- *
- * @return boolean
- */
+	/**
+	 * Set content panel
+	 *
+	 * *Description*
+	 *
+	 * @param array, string
+	 *
+	 * @return boolean
+	 */
  	
 	public function setPanel($request){
 		$sql_query = "UPDATE ".TBL_PRFX."panel
@@ -260,15 +259,15 @@ class SetContent extends \Model\ConnectDB {
 		}
 	}
 	
-/**
- * neuer Eintrag bzw Aktualisierung Variablen Seite
- *
- * *Description* 
- * 
- * @param array, string
- *
- * @return boolean
- */
+	/**
+	 * neuer Eintrag bzw Aktualisierung Variablen Seite
+	 *
+	 * *Description*
+	 *
+	 * @param array, string
+	 *
+	 * @return boolean
+	 */
  
 	public function setSiteSettings($request){
 		$sql_query = "UPDATE ".TBL_PRFX."settings 
@@ -309,15 +308,15 @@ class SetContent extends \Model\ConnectDB {
 		}
 	}
 	
-/**
- * neuer Benutzer
- *
- * *Description* 
- * 
- * @param array
- *
- * @return boolean
- */
+	/**
+	 * Set a new user
+	 *
+	 * *Description*
+	 *
+	 * @param array
+	 *
+	 * @return boolean
+	 */
  
 	public function setNewUser($user){
 		//Passwort verschlüsselt ersetzen
@@ -345,15 +344,15 @@ class SetContent extends \Model\ConnectDB {
 		}		
 	}
 	
-/**
- * Eintrag Benutzer aendern
- *
- * *Description* 
- * 
- * @param array
- *
- * @return boolean
- */
+	/**
+	 * Update existing user
+	 *
+	 * *Description*
+	 *
+	 * @param array
+	 *
+	 * @return boolean
+	 */
  
 	public function updateUser($user){
 		//Passwort verschlüsselt ersetzen
@@ -394,15 +393,15 @@ class SetContent extends \Model\ConnectDB {
 		}		
 	}
 	
-/**
- * Eintrag Benutzer entfernen
- *
- * *Description* 
- * 
- * @param array
- *
- * @return boolean
- */
+	/**
+	 * Remove a user
+	 *
+	 * *Description*
+	 *
+	 * @param array
+	 *
+	 * @return boolean
+	 */
  
 	public function deleteUser($name){
 		//SQL-Anweisung
@@ -420,15 +419,15 @@ class SetContent extends \Model\ConnectDB {
 		}
 	}
 	
-/**
- * neuer Eintrag bzw Aktualisierung Einstellungen Seite
- *
- * *Description* 
- * 
- * @param array, string
- *
- * @return boolean
- */
+	/**
+	 * neuer Eintrag bzw Aktualisierung Einstellungen Seite
+	 *
+	 * *Description*
+	 *
+	 * @param array, string
+	 *
+	 * @return boolean
+	 */
  
 	public function setSetup($request, $where = 'system'){
 		switch ($where){
