@@ -28,6 +28,7 @@ class AdminController {
 	private $view;
 	private $request;
 	private $libs;
+	private $page;
 
 	/**
 	 * AdminController constructor.
@@ -57,6 +58,7 @@ class AdminController {
 			'setViewAdmin',
 			'loadAction',
 			'sendAllHeaders',
+			'setCurrentPage',
 			'display'
 		];
 		foreach($methods as $method){
@@ -123,6 +125,12 @@ class AdminController {
 
 	public function setLoginController() {
 		$this->login = new \Controller\LoginController();
+		$this->login->setEntriesData( $this->getEntries() );
+		$this->login->setRequest( $this->getRequest() );
+		$this->login->setResponse( $this->response );
+		// Handle Login
+		$this->login->setMaxLifetime( 3600 * 24 * 7 );
+		$this->login->SetDurationLogin();
 	}
 
 	/**
@@ -168,9 +176,6 @@ class AdminController {
 	 */
 
 	private function loadAction(){
-
-		// Handle Login
-		$this->getLoginController()->SetLogin();
 
 		if($this->getRequest('action') and $this->getLoginController()->CheckLogin()) {
 			$action = new \Controller\ActionsController();
@@ -246,6 +251,21 @@ class AdminController {
 
 			}
 		}
+
+		if( $this->getRequest('action') ){
+			switch ($this->getRequest('action')) {
+
+				case 'login':
+					// Login
+					$this->success['classFormLogin'] = $this->getLoginController()->SetLogin();
+					break;
+
+				case 'forgetpassword':
+					// Forget password
+					$this->success['ForgetPassword'] = $this->getLoginController()->sendForgetPassword();
+					break;
+			}
+		}
 	}
 	
 	/**
@@ -264,15 +284,8 @@ class AdminController {
 		define('DIR_PROTECTION',TRUE);	
 		
 		if($this->getLoginController()->CheckLogin()){
-			$p = !empty($this->getRequest('load')) ? $this->getRequest('load') : 'start';
-			//Whitelist Param load
-			if ( file_exists( DIR_ADMIN . 'pages/' . $p . '.php' ) ) {
-				$this->getViewAdmin()->siteContent = DIR_ADMIN . 'pages/' . $p . '.php';
-			} else {
-				$this->getViewAdmin()->siteContent = DIR_ADMIN . 'pages/error.php';
-			}
-			
-			switch($p) {
+
+			switch($this->page) {
 				
 				case 'start':
 					//Data Start Dashboard
@@ -310,8 +323,7 @@ class AdminController {
 			}
 		}
 		else{
-			$this->getViewAdmin()->classFormLogin = $this->getLoginController()->loginData['classFormLogin'];
-			$this->getViewAdmin()->siteContent = DIR_ADMIN.'pages/login.php';
+			$this->getViewAdmin()->Data = $this->DataLogin();
 		}
 		// Load System Infos
 		$this->getViewAdmin()->SystemInfo = $this->getEntries()->readSystemInfos();
@@ -324,6 +336,54 @@ class AdminController {
             return $e->getMessage();
         }
 		
+	}
+
+	/**
+	 * Set the current page with site content for admin view
+	 */
+
+	private function setCurrentPage(){
+		$statusLogin = $this->getLoginController()->CheckLogin();
+		$p = (string)$this->getRequest( 'load' );
+		$this->page = 'login';
+		if ( $p and $statusLogin ) {
+			$this->page = $p;
+		}
+		if ( !$p and $statusLogin ){
+			$this->page = 'start';
+		}
+		if ( $p === 'forgetpassword' ){
+			$this->page = 'forgetpassword';
+		}
+		//White list Param load
+		if ( !file_exists( DIR_ADMIN . 'pages/' . $this->page . '.php' ) ) {
+			$this->page = 'error';
+		}
+
+		$this->getViewAdmin()->siteContent = DIR_ADMIN . 'pages/' . $this->page . '.php';
+	}
+
+	/**
+	 * Daten Ausgabe Startseite erzeugen
+	 *
+	 * *Description*
+	 *
+	 * @param
+	 *
+	 * @return array
+	 */
+
+	private function DataLogin(){
+		$data = [];
+		if( !empty($this->success['classFormLogin']) ){
+			$data['Class'] = $this->success['classFormLogin'];
+		}
+		else {
+			$data['Class'] = '';
+		}
+		$data['Action'] = DIR.'?load=forgetpassword';
+
+		return $data;
 	}
 	
 	/**

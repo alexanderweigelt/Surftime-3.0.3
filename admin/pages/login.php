@@ -20,19 +20,21 @@ if(defined('DIR_PROTECTION') and DIR_PROTECTION){
 						<fieldset>
 						<legend>Login</legend>
 						<div>
-							<label for="user" class="'.$this->classFormLogin.'">Benutzername</label>
-							<input type="text" id="user" name="loginUser" class="'.$this->classFormLogin.'" value="" placeholder="Username" required>
+							<label for="user" class="'.$this->Data['Class'].'">Benutzername</label>
+							<input type="text" id="user" name="loginUser" class="'.$this->Data['class'].'" value="" placeholder="Username" required>
 						</div>
 						<div>
-							<label for="password" class="'.$this->classFormLogin.'">Passwort</label>
-							<input type="password" id="password" name="loginPass" class="'.$this->classFormLogin.'" value="" placeholder="Passwort" required>
+							<label for="password" class="'.$this->Data['Class'].'">Passwort</label>
+							<input type="password" id="password" name="loginPass" class="'.$this->Data['class'].'" value="" placeholder="Passwort" required>
 						</div>
 						<div>
+							<input type="hidden" name="action" value="login">
 							<input class="button expand extramargin" type="submit" name="loginSubmit" value="Login">
 						</div>
 						</fieldset>
 					</form>
-					<p>&larr; '.$this->Menu('SingleLink', 'index','Home').'</p>
+					<p>&larr; '.$this->Menu('SingleLink', 'index','Home', 'left').'<a href="'.$this->Data['Action'].'" class="right">Forget Password</a></p>
+					<p></p>
 				</div>
 		');	
 	

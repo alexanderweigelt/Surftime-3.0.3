@@ -1,6 +1,6 @@
 <?php
 
- /**
+/**
  * Login Controller
  *
  * *Description*
@@ -11,34 +11,99 @@
  * @license http://creativecommons.org/licenses/by-nc-nd/4.0/legalcode CC BY-NC-ND 4.0
  */
 
- namespace Controller;
+namespace Controller;
 
 
- /**
-  * Class LoginController
-  * @package Controller
-  */
+/**
+ * Class LoginController
+ * @package Controller
+ */
 
- class LoginController {
+class LoginController {
 
-	/** Eigenschaften definieren */
+	/** Properties */
 	public $loginData = [];
 	private $entries;
-    private $maxLifetime;
+	private $request;
+	private $maxLifetime;
+	private $response;
 
 	/**
-	 * Constructor
-	 *
-	 * *Description*
+	 * LoginController constructor.
 	 */
 
-    public function __construct() {
-		$this->entries = new \Model\GetContent();
-		$this->loginData['classFormLogin'] = '';
-
+	public function __construct() {
 		// Start new session
-        $this->maxLifetime = 3600 * 24 * 7;
-		$this->Session = new \Framework\Session('LOGIN');
+		$this->Session = new \Framework\Session( 'LOGIN' );
+	}
+
+
+	/**
+	 * Returns a value of session max lifetime
+	 *
+	 * @return int
+	 */
+
+	public function getMaxLifetime() {
+		return $this->maxLifetime;
+	}
+
+	/**
+	 * @param int $maxLifetime
+	 */
+
+	public function setMaxLifetime( $maxLifetime ) {
+		$this->maxLifetime = $maxLifetime;
+	}
+
+	/**
+	 * Returns a Model GetContent
+	 *
+	 * @return \Model\GetContent
+	 */
+
+	public function getEntriesData() {
+		return $this->entries;
+	}
+
+	/**
+	 * Set a instance from Model GetContent
+	 */
+
+	public function setEntriesData( $object ) {
+		$this->entries = $object;
+	}
+
+	/**
+	 * @return mixed
+	 */
+
+	public function getRequest() {
+		return $this->request;
+	}
+
+	/**
+	 * @param mixed $request
+	 */
+
+	public function setRequest( $request ) {
+		$this->request = $request;
+	}
+
+	/**
+	 * @return mixed
+	 */
+
+	public function getResponse() {
+		return $this->response;
+	}
+
+	/**
+	 * @param mixed $response
+	 */
+
+	public function setResponse( $response ) {
+		$this->response = $response;
 	}
 
 	/**
@@ -53,32 +118,31 @@
 
 	public function SetLogin() {
 		$this->SetDurationLogin();
-		if(isset($_POST['loginSubmit'])){
+		$msg = 'error';
 
-			foreach($_POST as $k => $v){
-				$$k = trim(strip_tags($v));
-			}
-			if(empty($loginUser) or empty($loginPass)){
-				$this->loginData['classFormLogin'] = 'error';
-			}
-			else{
-				// Get admin data
-				$login = $this->entries->getUserData($loginUser);
+		foreach ( $this->getRequest() as $k => $v ) {
+			$$k = (string)trim( strip_tags( $v ) );
+		}
+		if ( empty( $loginUser ) or empty( $loginPass ) ) {
+			return $msg;
+		}
+		else {
+			// Get admin data
+			$login = $this->getEntriesData()->getUserData( $loginUser );
 
-				/** @var TYPE_NAME $loginPass */
-				if( $login['password'] === crypt($loginPass, $login['password'])){
-					$this->Session->writeSession('auth', true);
-                    $this->Session->writeSession('password', $login['passowrd']);
-                    // set up user roles and permissions
-                    $this->Session->writeSession('role', $login['status']);
+			/** @var string $loginPass */
+			if ( $login['password'] === crypt( $loginPass, $login['password'] ) ) {
+				$this->Session->writeSession( 'auth', true );
+				$this->Session->writeSession( 'password', $login['passowrd'] );
+				// set up user roles and permissions
+				$this->Session->writeSession( 'role', $login['status'] );
 
-					header('Location: '.DIR.'?tab=1');
-					exit();
-				}
-				else{
-					$this->loginData['classFormLogin'] = 'error';
-                    $this->Session->destroySession();
-				}
+				$this->getResponse()->modifyHeader('status', 302, TRUE);
+				$this->getResponse()->modifyHeader('location', DIR . '?tab=1', TRUE);
+				$this->getResponse()->sendHeaders();
+			} else {
+				$this->Session->destroySession();
+				return $msg;
 			}
 		}
 	}
@@ -94,11 +158,12 @@
 	 */
 
 	public function CheckLogin() {
-		$login = FALSE;
-        $auth = $this->Session->readSession('auth');
-		if(!empty($auth) and $auth === true){
-			$login = TRUE;
+		$login = false;
+		$auth  = $this->Session->readSession( 'auth' );
+		if ( ! empty( $auth ) and $auth === true ) {
+			$login = true;
 		}
+
 		return $login;
 	}
 
@@ -112,26 +177,31 @@
 	 * @return
 	 */
 
-	public function Logout(){
+	public function Logout() {
 		$this->Session->destroySession();
-		header('LOCATION: '.DIR);
-		exit();
+		$this->getResponse()->modifyHeader('status', 302, TRUE);
+		$this->getResponse()->modifyHeader('location', DIR, TRUE);
+		$this->getResponse()->sendHeaders();
 	}
 
-    /**
-     * Set Duration login
-     *
-     * *Description*
-     *
-     * @param
-     *
-     * @return void
-     */
+	/**
+	 * Set Duration login
+	 *
+	 * *Description*
+	 *
+	 * @param
+	 *
+	 * @return void
+	 */
 
-    private function SetDurationLogin(){
-        $setup = $this->entries->getSetup();
-        if(empty($setup['logout']) and $setup['logout'] == false){
-            $this->Session->setLifetime($this->maxLifetime);
-        }
-    }
+	public function SetDurationLogin() {
+		$setup = $this->getEntriesData()->getSetup();
+		if ( empty( $setup['logout'] ) and $setup['logout'] == false ) {
+			$this->Session->setLifetime( $this->getMaxLifetime() );
+		}
+	}
+
+	public function sendForgetPassword() {
+
+	}
 }

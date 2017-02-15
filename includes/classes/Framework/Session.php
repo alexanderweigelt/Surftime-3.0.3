@@ -143,7 +143,7 @@ class Session {
      */
 
     public function destroySession(){
-        $_SESSION = array();
+        $_SESSION = [];
         session_destroy();
         setcookie(SESSION_NAME, "", time() - $this->sessionLifetime * 10);
     }
@@ -175,7 +175,7 @@ class Session {
      */
 
     public function getSessionParams(){
-        $r = array();
+        $r = [];
         if(!empty(session_id())){
             $r = session_get_cookie_params();
         }
