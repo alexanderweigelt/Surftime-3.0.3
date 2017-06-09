@@ -1,0 +1,11 @@
+{
+  "name": "surftime/cms",
+  "description": "Surftime CMS project",
+  "authors": [
+    {
+      "name": "Alexander Weigelt",
+      "email": "webdesign@alexander-weigelt.de"
+    }
+  ],
+  "minimum-stability": "dev"
+}
