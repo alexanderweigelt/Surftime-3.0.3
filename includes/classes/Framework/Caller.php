@@ -12,9 +12,14 @@
  */ 
  
  namespace Framework;
- 
 
-class Caller {
+
+ /**
+  * Class Caller
+  * @package Framework
+  */
+
+ class Caller {
 	
 	protected $newObjekt;
 	

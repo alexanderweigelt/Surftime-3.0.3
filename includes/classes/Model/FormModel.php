@@ -12,6 +12,7 @@
  */ 
  
 namespace Model;
+use Controller\Helpers;
 
 
 /**
@@ -32,17 +33,15 @@ class FormModel {
 	 */
  
 	public function sendContactData($email){
-		
-		// bulid header
-		$headers  = 'From:* Formularmailer '.$_SERVER['HTTP_HOST'].' *<noreply@'.$_SERVER['HTTP_HOST'].'>'."\n";
-		$headers .= 'Reply-To:'.$email['adress']."\n";
-		$headers .= 'X-Mailer: PHP'."\n";
-		$headers .= 'Content-Transfer-Encoding: 8bit'."\n";
-		$headers .= 'MIME-Version: 1.0'."\n";
-		$headers .= 'Content-type: text/plain; charset=UTF-8'."\n";
+		$mail = new \Framework\Mail();
+		$mail->setTo($email['to']);
+		$mail->setSubject($email['subject']);
+		$mail->setMessage($email['content']);
+		$mail->setReplyTo($email['adress']);
+		$mail->setFrom('noreply@'.$_SERVER['HTTP_HOST'], '* Formularmailer '.Helpers::getHost().' *');
 
 		// send message
-		if(mail($email['to'], $email['subject'], $email['content'], $headers)){
+		if($mail->send()){
 			return true;
 		}
 		else{

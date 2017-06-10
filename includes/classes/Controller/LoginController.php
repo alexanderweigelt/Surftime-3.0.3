@@ -202,6 +202,6 @@ class LoginController {
 	}
 
 	public function sendForgetPassword() {
-
+		
 	}
 }

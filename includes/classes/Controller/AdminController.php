@@ -52,12 +52,12 @@ class AdminController {
 		$methods = [
 			'setEntries',
 			'checkInstall',
+			'sendAllHeaders',
 			'setRequest',
 			'setLoginController',
 			'setLibs',
 			'setViewAdmin',
 			'loadAction',
-			'sendAllHeaders',
 			'setCurrentPage',
 			'display'
 		];

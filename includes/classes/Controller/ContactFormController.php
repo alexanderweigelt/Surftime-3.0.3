@@ -93,14 +93,14 @@ class ContactFormController {
 		// clean send Data
 		$send = \Controller\Helpers::Clean($param);
 		
-		// Required Content, Adress, Subject ...
+		// Required Content, Address, Subject ...
 		foreach($this->data as $key => $value){
 			if(array_key_exists($key, $send)){
 				$this->data[$key] = !empty($send[$key]) ? $send[$key] : $key.' no specification';
 			}
 			else{
 				break;
-				$this->data= array();			
+				$this->data = array();
 			}
 		}
 		
