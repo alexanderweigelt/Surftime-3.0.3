@@ -168,8 +168,8 @@ class Mail {
 	 */
 
 	public function setMessage($message) {
-		$this->checkUTF8($message, 'message');
-		$this->message = str_replace("\n.", "\n..", (string) $message);
+		$this->checkUTF8((string) $message, 'message');
+		$this->message = wordwrap((string) $message, 78, PHP_EOL, true);
 	}
 
 	/**
